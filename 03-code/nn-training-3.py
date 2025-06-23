@@ -351,9 +351,9 @@ class NeuralNetworkVisualizer:
                 
                 # Parse input
                 numbers = user_input.split()
-                #if len(numbers) != 2:
-                #    print("Errore: inserisci esattamente due numeri separati da spazio")
-                #    continue
+                if len(numbers) != 2:
+                    print("Errore: inserisci esattamente due numeri separati da spazio")
+                    continue
                 
                 x1, x2 = float(numbers[0]), float(numbers[1])
                 
@@ -391,12 +391,13 @@ class NeuralNetworkVisualizer:
                 self.visualize_prediction(test_point_normalized[0], predicted_class, confidence)
                 
             #except ValueError:
-                #print("Errore: inserisci numeri validi (es: 1.5 -0.8)")
+            #    print("Errore: inserisci numeri validi (es: 1.5 -0.8)")
             except KeyboardInterrupt:
                 print("\nInterruzione utente. Arrivederci!")
                 break
             except Exception as e:
-                print(f"Errore: {e}")
+                continue
+            #    print(f"Errore: {e}")
     
     def visualize_prediction(self, point, predicted_class, confidence):
         """Visualizza il punto predetto sul grafico"""
