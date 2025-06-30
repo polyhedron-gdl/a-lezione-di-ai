@@ -1,0 +1,532 @@
+\documentclass{beamer}
+%
+%=====================================================================
+%
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{hyperref}
+%
+%=====================================================================
+%
+\usetheme{Madrid}
+%
+%=====================================================================
+%
+\title{Dimensione Etica \\ Temi Generali e Proposte Educative}
+\subtitle{}
+\setbeamercovered{transparent} 
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+\institute{A lezione di Intelligenza Artificiale} 
+\date{Siena - Giugno 2025} 
+%
+%=====================================================================
+%
+\begin{document}
+
+% Slide titolo
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Indice
+\begin{frame}{Indice}
+    \tableofcontents
+\end{frame}
+%
+%=====================================================================
+%
+\AtBeginSection[]
+{
+  %\begin{frame}<beamer>
+  %\footnotesize	
+  %\frametitle{Outline}
+  %\begin{multicols}{2}
+  %\tableofcontents[currentsection]
+  %\end{multicols}	  
+  %\normalsize
+  %\end{frame}
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	 	 	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+%__________________________________________________________________________
+%
+\section{Etica dell'IA: Questioni e Principi}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Etica dell'IA: Questioni e Principi}
+
+\begin{itemize}
+    \item \textbf{Responsabilità}: chi risponde delle decisioni prese da sistemi automatizzati?
+    \item \textbf{Discriminazione e pregiudizi}: quali rischi emergono dall'uso di tecnologie IA?
+    \item \textbf{Privacy e sicurezza}: impatti dello sviluppo dell’IA sui dati personali.
+    \item \textbf{Trasparenza}: quale ruolo gioca nella fiducia verso l’IA?
+    \item \textbf{Fiducia e accettazione}: fino a che punto possiamo affidarci a questa tecnologia?
+\end{itemize}
+
+\vspace{0.3cm}
+{\small
+Secondo \textbf{Floridi (2022)}, l’etica dell’IA nasce negli anni ‘50-‘60, ma l’interesse si è intensificato solo recentemente grazie ai progressi tecnologici (\textit{Yang et al.}, 2018).
+}
+
+\vspace{0.2cm}
+{\small
+\textbf{Müller (2020)} colloca l’etica dell’IA nell’ambito dell’etica applicata, evidenziandone la natura dinamica e instabile.
+}
+
+\vspace{0.2cm}
+{\small
+La letteratura recente è ampia (Boddington, 2023; Stahl, Schroeder, Rodrigues).
+}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{IA, Privacy e Sorveglianza}
+
+\begin{itemize}
+    \item \textbf{Digitalizzazione e IA} hanno potenziato enormemente la raccolta e sorveglianza dei dati personali.
+    \item \textbf{Dati scambiati tra attori diversi}, spesso a pagamento e senza controllo da parte dell’utente.
+    \item \textbf{Processo opaco}: gli utenti raramente sono informati in modo adeguato.
+    \item \textbf{Manipolazione sottile}: la gratuità apparente si basa sul modello "servizi in cambio di dati".
+    \item \textbf{Perdita di autonomia}: molti utenti non riescono più a sottrarsi al controllo dei grandi attori tecnologici.
+\end{itemize}
+
+\vspace{0.4cm}
+{\small
+\textbf{Focus}: La maggioranza degli utenti ha perso la capacità di opporsi consapevolmente alla raccolta e alla monetizzazione dei propri dati personali.
+}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{IA: Manipolazione, Opacità e Bias}
+
+\begin{itemize}
+    \item \textbf{Stimoli personalizzati} e \textbf{pattern oscuri} vengono usati per influenzare i comportamenti, specialmente nel marketing e nel gioco d'azzardo.
+    \item \textbf{Opacità dei modelli}: molti sistemi di IA sono \textit{black box}, nemmeno i programmatori riescono a spiegare come si formano le decisioni.
+    \item \textbf{Mancanza di trasparenza} e partecipazione: utenti ed esperti spesso non comprendono le decisioni dell’IA.
+    \item \textbf{Bias nei sistemi decisionali}: input distorti possono produrre risultati discriminatori.
+    \item \textbf{Polizia predittiva}: esempio emblematico di rischio etico legato alla previsione algoritmica applicata alla sicurezza.
+\end{itemize}
+
+\vspace{0.3cm}
+{\small
+\textbf{Focus}: L'automazione delle decisioni comporta rischi di manipolazione, opacità e discriminazione sistematica.
+}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Bias nei dati e discriminazione}
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+        \begin{itemize}
+        \small
+		\item I sistemi si basano su dati storici di arresti e denunce, quindi su dati spesso influenzati da pratiche di polizia già razziste o ingiuste. 
+		\item Le aree più pattugliate, tipicamente comunità di colore, generano più dati che alimentano previsioni ulteriormente sbilanciate: un classico feedback loop che rafforza il ciclo di sorveglianza .
+\item Conseguenza: interi quartieri, già stigmatizzati, rischiano di essere sorvegliati e criminalizzati ingiustamente .
+        \end{itemize}
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+    %\fbox{
+        \includegraphics[width=\linewidth]{../05-pictures/dimensione-etica-1_pic_0.png}
+    %}
+\end{column}%
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Bias nei dati e discriminazione}
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+        \begin{itemize}
+        \small
+		\item Quando la polizia interviene basandosi sulle previsioni, generano nuovi arresti in quell’area, rafforzando ulteriormente gli algoritmi. Questa spirale è ben documentata, sia teoricamente sia empiricamente . 
+		\item Molti algoritmi sono proprietari (black-box): la comunità o le autorità non possono verificarne il funzionamento o contrastare decisioni errate .
+\item Senza audit indipendenti, un programma può continuare a operare malgrado effetti negativi tangibili, come nel caso di PredPol, attivo per anni nonostante mancanza di prove di efficacia.
+        \end{itemize}
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+    %\fbox{
+        \includegraphics[width=\linewidth]{../05-pictures/dimensione-etica-1_pic_0.png}
+    %}
+\end{column}%
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Contesto}
+\textbf{Nome del programma:} \textbf{IMPACT}\\
+\textbf{Luogo:} Distretto scolastico di Washington D.C.\\
+\textbf{Obiettivi dichiarati:}
+\begin{itemize}
+  \item Valutare la performance degli insegnanti in modo oggettivo e meritocratico.
+  \item Premiare i docenti pi\`u efficaci con bonus economici.
+  \item Licenziare chi non soddisfa gli standard di qualit\`a.
+\end{itemize}
+
+\textbf{Strumenti utilizzati:}
+\begin{itemize}
+  \item Osservazioni in aula da parte di supervisori.
+  \item Analisi dei punteggi dei test standardizzati (modello VAM).
+  \item Valutazione del contributo alla comunit\`a scolastica.
+\end{itemize}
+
+\textbf{Risultato:} Decine di insegnanti licenziati ogni anno in base a punteggi VAM spesso instabili e poco trasparenti.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Contesto}
+\textbf{Obiettivo del programma}
+\begin{itemize}
+  \item Migliorare la qualit\`a dell'insegnamento nelle scuole pubbliche, premiando i docenti pi\`u efficaci.
+  \item Introdurre criteri quantitativi per rendere meritocratico il sistema educativo.
+  \item Razionalizzare l'impiego delle risorse e rimuovere gli insegnanti considerati poco performanti.
+\end{itemize}
+
+\textbf{Approccio adottato}
+\begin{itemize}
+  \item Utilizzo di test standardizzati annuali per misurare l'apprendimento degli studenti.
+  \item Adozione di modelli statistici (Value-Added Models, VAM) per isolare il contributo dell'insegnante al miglioramento dei risultati.
+  \item Applicazione diffusa in distretti come Washington D.C., New York City, Los Angeles.
+  \item Decisioni di carriera (promozioni, licenziamenti) basate in larga parte sul punteggio algoritmico.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Contesto}
+\textbf{Contesto storico}
+\begin{itemize}
+  \item Anni 2000: forte spinta alla responsabilit\`a dei docenti, in particolare con la legge \textit{No Child Left Behind}.
+  \item Crescente fiducia nei dati e negli algoritmi come strumenti oggettivi di valutazione.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il modello algoritmico}
+\textbf{Come funziona il VAM?}
+\begin{itemize}
+  \item Si calcola la differenza tra il punteggio atteso e quello reale dello studente.
+  \item La media dei delta definisce il "valore aggiunto" dell'insegnante.
+\end{itemize}
+
+\textbf{Come si stima il punteggio atteso?}
+\begin{itemize}
+  \item Attraverso un modello di regressione che tiene conto di:
+  \begin{itemize}
+    \item Punteggi precedenti dello studente;
+    \item Fattori demografici (et\`a, livello socioeconomico, lingua madre);
+    \item Caratteristiche della scuola o della classe.
+  \end{itemize}
+  \item L'obiettivo \`e stimare quale sarebbe stato il punteggio senza l'intervento dell'insegnante attuale.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il modello algoritmico}
+\textbf{Problemi principali:}
+\begin{itemize}
+  \item Alta variabilit\`a da un anno all'altro.
+  \item Nessun controllo sui dati e sull'equazione utilizzata.
+  \item Uso di proxy approssimativi per misurare concetti complessi come "qualit\`a dell'insegnamento".
+  \item Basso numero di osservazioni (una sola classe per insegnante) genera risultati statisticamente fragili.
+  \item Rumore e variabili non controllabili (es. condizioni socioeconomiche, eventi esterni) distorcono i punteggi.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il problema dei proxy nei modelli VAM}
+\textbf{Cosa sono i proxy?}
+\begin{itemize}
+  \item Variabili surrogate utilizzate per rappresentare concetti non direttamente misurabili (es. efficacia didattica).
+  \item Nei VAM: si presume che il miglioramento nei punteggi dei test rifletta l'influenza dell'insegnante.
+\end{itemize}
+
+\textbf{Problemi riscontrati}
+\begin{itemize}
+  \item I punteggi degli studenti dipendono da molteplici fattori esterni non legati all'insegnamento.
+  \item I modelli non riescono a distinguere tra progresso reale e fluttuazioni casuali.
+  \item Insegnanti valutati su piccoli gruppi (25-30 studenti): stime instabili.
+  \item Proxy deboli incentivano comportamenti opportunistici (teaching to the test).
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Conseguenze pratiche}
+\begin{itemize}
+  \item Licenziamenti arbitrari di insegnanti competenti.
+  \item Focus eccessivo sull'insegnamento orientato ai test.
+  \item Riduzione della fiducia e della motivazione tra i docenti.
+  \item Esempio emblematico: Sarah Wysocki, insegnante apprezzata, licenziata a Washington D.C.
+\end{itemize}
+\vspace{.3cm}
+\textbf{Conclusione}
+\begin{itemize}
+  \item L'uso scorretto di proxy in contesti ad alto impatto pu\`o generare effetti distorti e ingiusti.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Critiche etiche}
+\textbf{Perch\'e \`e un Algoritmo di Distruzione di Massa (WMD)?}
+\begin{itemize}
+  \item \textbf{Opacit\`a}: non spiegabile n\'e contestabile.
+  \item \textbf{Scala}: applicato su larga scala.
+  \item \textbf{Danno}: ha effetti reali e negativi su persone innocenti.
+  \item \textbf{Feedback negativo}: incentiva strategie opportunistiche.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Cosa ci insegna questo episodio}
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+        \begin{itemize}
+  \item L'intelligenza artificiale e gli algoritmi non sono neutri.
+  \item Le metriche devono essere validate e comprensibili.
+  \item L'educazione \`e un contesto complesso, non completamente riducibile a numeri.
+  \item Serve trasparenza, partecipazione e responsabilit\`a etica.
+        \end{itemize}
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+    %\fbox{
+        \includegraphics[scale=0.35]{../05-pictures/dimensione-etica-1_pic_1.png}
+    %}
+\end{column}%
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{IA: Lavoro, Sostenibilità e Sistemi Autonomi}
+
+\begin{itemize}
+    \item \textbf{Interazione uomo-macchina}: l'IA può essere usata impropriamente per influenzare comportamenti umani.
+    \item \textbf{Mercato del lavoro}: l’automazione riduce la necessità di manodopera, generando \textbf{sfide inedite} e polarizzazione tra mestieri altamente specializzati e lavori facilmente sostituibili.
+    \item \textbf{Sostenibilità ambientale}: i sistemi di IA consumano molte risorse energetiche e materiali, ponendo interrogativi etici sull’impatto ambientale.
+    \item \textbf{Sistemi autonomi}: pongono dilemmi inediti in termini di responsabilità, controllo e decisione.
+\end{itemize}
+
+\vspace{0.3cm}
+{\small
+\textbf{Focus}: L’IA non impatta solo dati e decisioni, ma anche lavoro, ambiente e dinamiche sociali.
+}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Veicoli autonomi ed etica delle macchine}
+
+\begin{itemize}
+    \item \textbf{Veicoli autonomi}: potenziale riduzione di incidenti e inquinamento, ma emergono dilemmi su responsabilità e decisioni normative.
+    \item \textbf{Equilibrio etico}: tra interesse individuale e bene comune, spostando responsabilità da utenti a produttori e sistemi.
+    \item \textbf{Etica delle macchine}: riguarda le macchine come soggetti morali, non solo strumenti.
+    \item Alcuni autori propongono che l’IA debba garantire che il proprio comportamento verso gli umani sia \textbf{eticamente accettabile}.
+    \item Altri propongono IA in grado di \textbf{ponderare valori e interessi} in modo trasparente (Dignum, 2018).
+\end{itemize}
+
+\vspace{0.3cm}
+{\small
+\textbf{Nota}: Floridi (2022) sottolinea che la moltiplicazione dei principi etici rischia di generare confusione ed effetti collaterali.
+}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Principi etici dell’IA secondo Floridi}
+
+\textbf{Cinque principi fondamentali:}
+\begin{itemize}
+    \item \textbf{Beneficenza}: l’IA deve essere sviluppata per il bene comune.
+    \item \textbf{Non maleficenza}: evitare usi impropri e danni (es. violazione privacy, sicurezza).
+    \item \textbf{Autonomia}: bilanciare il potere decisionale umano e quello delegato alle macchine.
+    \item \textbf{Giustizia}: promuovere equità, combattere le discriminazioni.
+    \item \textbf{Esplicabilità}: garantire trasparenza e accountability.
+\end{itemize}
+
+\vspace{0.3cm}
+{\small
+Jobin, Ienca, Vayena (2019): analizzando ~100 documenti, identificano 11 principi chiave, tra cui emergono con maggiore frequenza:
+\textbf{trasparenza}, \textbf{giustizia ed equità}, \textbf{non maleficenza}, \textbf{responsabilità} e \textbf{privacy}.
+}
+
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Intelligenza Artificiale in Educazione}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{IA e educazione: lettura pedagogica delle sfide etiche}
+
+\begin{itemize}
+    \item L’IA sta introducendo \textbf{forme di automazione} nei sistemi educativi (es. tutor intelligenti, valutazione automatica, percorsi personalizzati).
+    \item Tuttavia, le \textbf{politiche educative} si concentrano sugli adulti, trascurando bambini e adolescenti.
+    \item \textbf{Linee guida etiche} sull’uso dell’IA in classe risultano scarse o vaghe.
+    \item Le questioni etiche legate all’uso dell’IA con i più giovani possono essere \textbf{ancora più critiche} rispetto ad altri contesti sociali.
+    \item Organizzazioni come \textbf{UNICEF}, \textbf{UNESCO} e \textbf{UE} stanno iniziando a colmare il divario.
+\end{itemize}
+
+\vspace{0.3cm}
+{\small
+\textbf{Nota}: La governance etica dell’IA in ambito educativo è ancora poco strutturata ma di crescente rilevanza.
+}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Il debate per esplorare i dilemmi etici dell’IA}
+
+\begin{itemize}
+    \item Il \textbf{debate} è una tecnica didattica utile per affrontare l’etica dell’IA senza cadere nella trasmissione dogmatica dei valori.
+    \item Metodo: confronto fra due tesi opposte, con argomentazioni pro e contro, repliche e sintesi.
+    \item Favorisce \textbf{pensiero critico}, capacità argomentativa e metacognizione.
+    \item Scopo non è vincere, ma \textbf{comprendere i punti di vista}, analizzare criticamente e saper argomentare.
+    \item Fasi: scelta del tema, raccolta dati, esposizione in classe, sintesi e valutazione finale.
+\end{itemize}
+
+\vspace{0.3cm}
+{\small
+\textbf{Focus}: Il debate aiuta studenti e docenti ad affrontare l’etica dell’IA in modo attivo, dialogico e critico.
+}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{European AI Act}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Che cos'è l'AI Act}
+\begin{itemize}
+\small
+\item L'AI Act (Regolamento UE 2024/1689) è il primo quadro normativo globale per regolamentare l'intelligenza artificiale, entrato in vigore il 1° agosto 2024. Questo regolamento europeo stabilisce regole armonizzate per lo sviluppo, l'immissione sul mercato e l'utilizzo di sistemi di intelligenza artificiale nell'Unione Europea.
+
+\item Il regolamento nasce dall'esigenza di bilanciare l'innovazione tecnologica con la protezione dei diritti fondamentali, della sicurezza e della salute dei cittadini europei. L'obiettivo principale è creare un ambiente digitale sicuro e affidabile, dove l'intelligenza artificiale possa svilupparsi nel rispetto dei valori europei.
+
+\item L'AI Act si propone di posizionare l'Europa come leader mondiale nella regolamentazione dell'IA, fornendo certezza giuridica alle imprese e garantendo al contempo protezione ai consumatori. Il regolamento copre tutti i settori e le applicazioni dell'intelligenza artificiale, dal riconoscimento facciale ai sistemi di raccomandazione, dai veicoli autonomi agli assistenti virtuali.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Approccio basato sul rischio}
+\begin{itemize}
+\small
+\item L'AI Act adotta un approccio innovativo basato sulla classificazione dei sistemi di intelligenza artificiale in quattro categorie di rischio: inaccettabile, alto, limitato e minimo. Questa classificazione determina gli obblighi e le restrizioni applicabili a ciascun sistema.
+
+\item I sistemi a rischio inaccettabile includono pratiche che violano i diritti fondamentali, come il punteggio sociale generalizzato, la manipolazione comportamentale subliminale e alcuni tipi di sorveglianza biometrica in tempo reale. Questi sistemi sono completamente vietati nell'Unione Europea.
+
+\item I sistemi ad alto rischio, utilizzati in settori critici come sanità, trasporti, giustizia e servizi pubblici essenziali, devono rispettare requisiti rigorosi. Questi includono valutazioni del rischio, documentazione tecnica dettagliata, trasparenza algoritemica, supervisione umana e sistemi di gestione della qualità. L'obiettivo è garantire che questi sistemi siano sicuri, accurati e non discriminatori prima della loro immissione sul mercato.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Approccio basato sul rischio}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-etica-1_pic_2.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Obblighi e requisiti principali}
+\begin{itemize}
+\small
+\item Per i sistemi ad alto rischio, l'AI Act stabilisce obblighi specifici che devono essere rispettati durante tutto il ciclo di vita del prodotto. I fornitori devono implementare sistemi di gestione del rischio, garantire la qualità dei dati di addestramento e condurre test approfonditi prima del rilascio.
+
+\item La documentazione tecnica deve essere completa e aggiornata, includendo informazioni sul funzionamento del sistema, sui dati utilizzati e sulle misure di mitigazione dei rischi. È richiesta anche la registrazione automatica degli eventi per consentire la tracciabilità e l'audit delle decisioni del sistema.
+
+\item La supervisione umana è un elemento centrale: deve essere garantito un controllo umano significativo sui sistemi ad alto rischio, con la possibilità di intervenire, interrompere o annullare le decisioni automatizzate. Inoltre, i sistemi devono essere progettati per essere robusti, accurati e sicuri, con particolare attenzione alla prevenzione di bias e discriminazioni nei risultati prodotti.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Governance e controlli}
+\begin{itemize}
+\small
+\item L'AI Act istituisce un sistema di governance multilivello per garantire l'applicazione effettiva del regolamento. A livello europeo, è stato creato l'European AI Office, responsabile del coordinamento e della supervisione dell'implementazione, particolarmente per i modelli di AI generale ad alto impatto.
+
+\item Ogni Stato membro deve designare autorità nazionali competenti per la vigilanza e il controllo sui sistemi di intelligenza artificiale. Queste autorità hanno il potere di condurre ispezioni, richiedere documentazione e imporre misure correttive quando necessario.
+
+\item Il regolamento prevede anche la creazione di organismi notificati indipendenti per la valutazione di conformità dei sistemi ad alto rischio prima della loro immissione sul mercato. Inoltre, è istituito un sistema di segnalazione degli incidenti gravi, che permette alle autorità di monitorare e rispondere rapidamente a problemi di sicurezza. La cooperazione tra Stati membri è facilitata attraverso meccanismi di assistenza reciproca e condivisione delle informazioni.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Sanzioni e tempistiche}
+\begin{itemize}
+\small
+\item L'AI Act prevede un sistema sanzionatorio proporzionato ma severo per garantire il rispetto delle norme. Le sanzioni amministrative possono raggiungere i 35 milioni di euro o il 7\% del fatturato annuo globale per le violazioni più gravi, come l'uso di sistemi vietati o la non conformità dei sistemi ad alto rischio.
+
+\item Per violazioni meno gravi, come la mancanza di trasparenza o problemi nella documentazione, le sanzioni possono arrivare a 15 milioni di euro o al 3\% del fatturato annuo. Le sanzioni più basse, fino a 7,5 milioni di euro o all'1,5\% del fatturato, si applicano per la fornitura di informazioni incomplete o inesatte alle autorità.
+
+\item L'implementazione del regolamento segue un calendario graduale: dal 2 febbraio 2025 sono in vigore i divieti per i sistemi a rischio inaccettabile, mentre i requisiti completi per i sistemi ad alto rischio entreranno in vigore ad agosto 2026. Questa tempistica permette alle aziende di adeguarsi progressivamente alle nuove norme, garantendo una transizione controllata verso il nuovo quadro normativo.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Impatto e prospettive future}
+\begin{itemize}
+\small
+\item L'AI Act rappresenta un cambiamento paradigmatico nel panorama tecnologico globale, stabilendo standard che influenzeranno lo sviluppo dell'intelligenza artificiale ben oltre i confini europei. Il cosiddetto "Brussels Effect" potrebbe spingere aziende internazionali ad adottare gli standard europei come riferimento globale per la conformità.
+
+\item Per le imprese europee, il regolamento offre certezza giuridica e un vantaggio competitivo nel mercato globale dell'IA etica e responsabile. Tuttavia, comporta anche sfide significative in termini di costi di conformità e complessità amministrativa, particolarmente per le piccole e medie imprese.
+
+\item L'AI Act segna l'inizio di una nuova era nella regolamentazione tecnologica, dove l'innovazione deve procedere di pari passo con la protezione dei diritti e valori fondamentali. Il successo di questa normativa dipenderà dalla capacità di mantenere un equilibrio tra promozione dell'innovazione e gestione dei rischi, influenzando il futuro sviluppo dell'intelligenza artificiale a livello mondiale e definendo nuovi standard per la tecnologia responsabile.
+\end{itemize}
+\end{frame}
+%
+%=====================================================================
+%
+\end{document}
+%
+%=====================================================================
+%

@@ -1,0 +1,496 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+%
+%=====================================================================
+%
+% Tema e colori
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+%
+%=====================================================================
+%
+% Definizione colori personalizzati
+\definecolor{aiblue}{RGB}{30,144,255}
+\definecolor{mlgreen}{RGB}{46,139,87}
+\definecolor{datacolor}{RGB}{255,140,0}
+%
+%=====================================================================
+%
+\title{Dimensione Cognitiva \\ 5. Come le macchine comprendono il linguaggio}
+\subtitle{Il Meccanismo di Attenzione}
+\setbeamercovered{transparent} 
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+\institute{A lezione di Intelligenza Artificiale} 
+\date{Siena - Giugno 2025} 
+%
+%=====================================================================
+%
+\begin{document}
+
+% Slide titolo
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Indice
+\begin{frame}{Indice}
+    \tableofcontents
+\end{frame}
+%
+%=====================================================================
+%
+\AtBeginSection[]
+{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	 	 	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+%__________________________________________________________________________
+%
+\section{Il Meccanismo di "Attenzione"}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+\begin{itemize}
+\item    L'\textbf{attenzione selettiva} è un meccanismo cognitivo fondamentale
+che consente agli esseri umani di \textbf{concentrare le risorse
+mentali} su un'informazione rilevante e \textbf{ignorare gli stimoli
+irrilevanti} presenti nell'ambiente. 
+\item È ciò che ci permette, per esempio,
+di ascoltare una conversazione specifica in una stanza affollata
+(fenomeno noto come \emph{cocktail party effect}), oppure di leggere un
+libro ignorando i rumori esterni.
+\begin{center}
+\includegraphics[scale=.5]{../05-pictures/dimensione-cognitiva-5_pic_0.png} 
+\end{center}
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+Dal punto di vista neurocognitivo:
+\vspace{.3cm}
+\begin{itemize}
+\item
+  L'attenzione selettiva \textbf{filtra} l'informazione a livello
+  sensoriale e/o percettivo.
+\item
+  È \textbf{limitata}: non possiamo processare coscientemente tutto ciò
+  che ci circonda, perciò il cervello seleziona ciò che ritiene più
+  rilevante.
+\item
+  È \textbf{dinamica}: può essere guidata da stimoli esterni (attenzione
+  esogena) o da obiettivi interni (attenzione endogena).
+\item
+  È spesso \textbf{modulata da contesto, esperienza e aspettative}.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+Il meccanismo di attenzione nei \textbf{modelli di deep learning}, come
+i transformer introdotti nel celebre paper \emph{``Attention Is All You
+Need''}, si ispira (astrattamente) all'idea di attenzione umana. In
+particolare:
+
+\begin{itemize}
+\item
+  Entrambi i sistemi \textbf{danno più ``peso'' alle informazioni
+  rilevanti} rispetto a quelle irrilevanti.
+\item
+  Entrambi \textbf{distribuiscono le risorse di elaborazione} in maniera
+  non uniforme.
+\item
+  L'attenzione nei transformer \textbf{filtra e valorizza dinamicamente}
+  certi input rispetto ad altri in base al contesto, proprio come fa il
+  cervello quando decide a cosa prestare attenzione.
+\end{itemize}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Attention is all you need}
+%
+%..................................................................
+%
+\begin{frame}{Embeddings Contestuali}
+\begin{itemize}
+\item    Nel capitolo precedente abbiamo visto come, grazie a \emph{Word2Vec},
+sia stato possibile costruire dei vettori, gli \emph{embeddings}, che
+permettono di far capire al computer nozioni complesse, come le parole e
+il loro significato.
+\item Purtroppo, \textbf{questa tecnica non è infallibile, anzi: se un
+embedding ben costruito ha la capacità di separare in maniera netta
+concetti diversi, è difficile che funzioni bene sempre.}
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Embeddings Contestuali}
+\begin{itemize}
+\item Immaginiamo di voler costruire gli \emph{embeddings} delle parole
+``arancia'' all'interno dello schema visto nel capitolo precedente. 
+\item La
+parola ``arancia'' sarà più vicina a ``limone'' o a ``Joker'' (personaggio del film)? 
+\item Anche se non c'è una risposta precisa, è molto probabile che, durante l'addestramento, la parola ``arancia'' sia stata principalmente associata al frutto, piuttosto che ad un film (ad esempio \emph{Arancia meccanica}) 
+\item In parole povere, è più probabile trovare frasi generiche che parlino dell'arancia come frutto che discorsi sulla pellicola cinematografica
+\item Quindi il suo \emph{embedding} potrebbe essere simile a quello della parola ``limone''.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Embeddings Contestuali}
+\vspace{0.5cm}
+Ma in una frase come:
+\textbf{``Il film Joker mi ricorda molto Arancia Meccanica''}
+vorrei che la macchina intendesse questa parola più come un film
+piuttosto che come un frutto. Ed è anche quello che si aspettavano
+Ashish Vaswani e i suoi amici di Google nel 2017.
+\begin{center}
+\includegraphics[scale=.75]{../05-pictures/dimensione-cognitiva-5_pic_1.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Embeddings Contestuali}
+\begin{itemize}
+\item Nel mappare le parole, Word2Vec considera solo il loro
+contesto più prossimo, senza una comprensione più profonda del
+significato complessivo della frase. 
+\item Ogni istanza di una specifica
+parola ha lo stesso vettore, indipendentemente dalla frase in cui
+appare, e questo può rappresentare un problema.
+\item Tra le parole che cambiano significato a seconda della frase possiamo
+citare "arancia" (frutto o film), ma anche "cane" (animale o parte
+di un'arma), "rosa" (persona, colore o fiore), "mela" (frutto o
+città, la Grande Mela) e così via.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Embeddings Contestuali}
+\begin{itemize}
+\item Ashish e i suoi collaboratori capiscono che \textbf{serve quindi un trucco che modifichi il vettore della parola, l'\emph{embedding}, in base alla frase in cui essa si trova}
+\item In particolare, puntano a spostare il vettore "arancia" verso "Joker" (film) nel caso di \textbf{"Il film Joker mi ricorda molto Arancia Meccanica"}
+\item oppure verso "limone" (frutto) nel caso di \textbf{"Arancia e limone contengono molta vitamica C"}
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+\begin{itemize}
+\item Ma come si fa? Con l'attenzione selettiva, che nel mondo
+dell'intelligenza artificiale si chiama \emph{self-attention}.
+\item L'intelligenza artificiale come la conosciamo oggi deve gran parte dei suoi successi alla ricerca di questo gruppo di Google, e al loro famosissimo articolo chiamato \emph{"Attention Is All You Need"}, focalizzato sulla traduzione automatica. 
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+Solo cinque o sei anni fa la traduzione
+automatica era ancora un grande problema. Se ci pensate bene, anche una
+frase semplice come\\
+\vspace{0.3cm}
+\begin{center}
+\textbf{"Ti piace questo libro"}\\
+\end{center}
+\vspace{0.3cm}
+merita qualche accorgimento non banale nel caso volessimo tradurla
+automaticamente dall'italiano al francese.
+
+Mi piace questo libro → J'\textbf{aime} ce livre
+
+Ti piace questo libro → tu \textbf{aimes} ce livre
+
+Ci piace questo libro → nous \textbf{aimons} ce livre
+
+\ldots{}\\
+\vspace{.2cm}
+Mi piace questo mare → J'aime \textbf{cette} mer
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+\begin{itemize}
+\item Per tradurre correttamente la parola "piace" in francese, il modello di traduzione ha bisogno di capire che si riferisce a "ti" che lo precede. 
+\item Questo perché in francese, il verbo "piacere" cambia
+coniugazione a seconda del soggetto. 
+\item Quindi per questa traduzione serve
+solo il pronome personale complemento! 
+\item Il resto della frase è
+apparentemente inutile\ldots{} attenzione selettiva!
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+\begin{itemize}
+\item Lo stesso discorso vale per l'aggettivo dimostrativo "questo" \item per una corretta traduzione, il modello ha bisogno di sapere che si riferisce alla parola "libro", perché in francese questo si traduce diversamente a seconda che il sostantivo a cui si riferisce sia maschile o femminile.
+\item In gergo si dice che "piace" presta molta attenzione a "ti", e che "questo" presta molta attenzione a "libro".
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-5_pic_2.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-5_pic_3.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+\begin{itemize}
+\item La \emph{self-attention} capisce tutto questo e lo rappresenta con una tabella piena di numeri chiamati scores. 
+\item Ma come si calcola in pratica?
+\item Lo abbiamo già visto\ldots{} con la similarità tra gli embeddings!
+\item Riprendiamo in esame le due frasi precedenti:\\
+
+\textbf{``Il film Joker mi ricorda molto Arancia Meccanica''}\\
+
+\textbf{``Arancia e limone contengono molta vitamica C''}
+
+\item Mappiamo tutte le parole con un \emph{embedding} di tre dimensioni,
+"fruttosità", "filmosità", e una terza dimensione fittizia a caso.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+Gli \emph{embeddings} delle parole saranno:\\
+\vspace{0.5cm}
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{JOKER:} {[}0, 1, 0{]} (solo filmosità)
+
+\textbf{ARANCIA:} {[}0.5, 0.5, 0{]} (a metà tra fruttosità e filmosità)
+
+\textbf{LIMONE:} {[}1, 0, 0{]} (sostituito con i valori di mela, quindi
+solo fruttosità)
+
+\textbf{UNA, ED, UN, E:} {[}0, 0, 1{]} (asse fittizio)
+
+\textbf{MECCANICA:} {[}0.1, 0.9, 0{]} (prevalentemente filmosità)
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+Se moltiplico tra di loro le parole della frase ottengo una tabella con
+le varie similarità, ossia i prodotti scalari delle varie parole.
+\begin{center}
+\includegraphics[scale=.75]{../05-pictures/dimensione-cognitiva-5_pic_4.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+\begin{itemize}
+\item Queste tabelle possono essere viste come delle matrici. 
+\item Le matrici in matematica sono usate per modificare i vettori. 
+\item Se moltiplicate un vettore (\emph{embedding}) per una matrice (la tabella dell'attenzione) ottieni un nuovo vettore (\emph{embedding}), ruotato e scalato rispetto all'originale.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+\begin{itemize}
+\item Questa rappresentazione mostra come le parole siano correlate tra loro nelle due frasi, in base alle dimensioni di "fruttosità",
+"filmosità" e l'asse fittizio. 
+\item Ovviamente è solo un esempio, ma
+possiamo considerarlo come un rudimentale meccanismo dell'attenzione.
+\item Quindi se nella prima frase `arancia' dipende un po' da se stessa e un
+po' da "limone", nel secondo esempio "arancia" viene trascinata verso
+l'asse della "filmosità" da "Joker".
+\end{itemize}
+\vspace{0.5cm}
+\textbf{Quindi l'attenzione svolge proprio questo ruolo, ossia modifica tutti gli \emph{embeddings} iniziali della nostra frase a seconda del contesto della frase stessa.}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+Ashish e i suoi perfezionano ancora di più tale meccanismo, impacchettando vari strati di attenzione uno sopra l’altro (multi-head attention) e lasciando che sia la macchina a decidere come usarli. In pratica, a seconda dell’obiettivo dell’allenamento, potremmo avere attenzioni che separano bene le parole in base a diverse caratteristiche come: \\
+\vspace{0.5cm}
+\textbf{connotazione emotiva}: parole come ‘amore’ e ‘felicità’ hanno connotazioni emotive positive, mentre parole come ‘odio’ e ‘tristezza’ hanno connotazioni negative. Questa misurazione può essere particolarmente utile nell’analisi del sentiment e negli studi di psicologia del linguaggio;
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+Ashish e i suoi perfezionano ancora di più tale meccanismo, impacchettando vari strati di attenzione uno sopra l’altro (multi-head attention) e lasciando che sia la macchina a decidere come usarli. In pratica, a seconda dell’obiettivo dell’allenamento, potremmo avere attenzioni che separano bene le parole in base a diverse caratteristiche come: \\
+\vspace{0.5cm}
+\textbf{complessità lessicale}: parole semplici come ‘casa’ o ‘libro’ hanno una bassa complessità lessicale, mentre altre come ‘anticonformista’ o ‘fotosintesi’ sono più complesse o tecniche. Questo può essere importante in contesti educativi o nella stesura di testi destinati a pubblici con differente livello di comprensione;
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Attenzione Selettiva}
+Ashish e i suoi perfezionano ancora di più tale meccanismo, impacchettando vari strati di attenzione uno sopra l’altro (multi-head attention) e lasciando che sia la macchina a decidere come usarli. In pratica, a seconda dell’obiettivo dell’allenamento, potremmo avere attenzioni che separano bene le parole in base a diverse caratteristiche come: \\
+\vspace{0.5cm}
+\textbf{frequenza d’uso}: alcune parole sono molto comuni (‘è’, ‘il’, ‘la’), mentre altre sono meno frequenti (‘zefiro’ o ‘bislacco’). La frequenza d’uso può essere cruciale nello studio delle lingue, nella creazione di corsi di lingua e nella progettazione di sistemi di riconoscimento vocale o di traduzione automatica.
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Transformer}
+%
+%..................................................................
+%
+\begin{frame}{Transformer}
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+\vspace{1cm}
+        \begin{itemize}
+\item Queste caratteristiche vengono poi analizzate contemporaneamente e possono essere utilizzate per analizzare il linguaggio e per comprendere meglio come le parole influenzano la comunicazione e la percezione. 
+\item La sovrapposizione di questi livelli di attenzione ha creato uno strumento molto versatile chiamato \textbf{transformer}.
+        \end{itemize}
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+    %\fbox{
+        \includegraphics[width=\linewidth]{../05-pictures/dimensione-cognitiva-5_pic_5.png}
+    %}
+\end{column}%
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Transformer}
+L’architettura originaria dei transformers si compone di due parti, l’\textbf{encoder} e il \textbf{decoder}:
+\begin{itemize}
+\item \textbf{encoder}: riceve la frase in italiano e ne costruisce una \textbf{rappresentazione astratta} (\textbf{l’embedding modificato}) utilizzando più volte la \textbf{self-attention};
+\item \textbf{decoder}: utilizza l’embedding modificato creato dall’encoder e, insieme ad altre informazioni, lo usa per generare la frase in francese. Ciò significa che \textbf{è il decoder a generare l’output}.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Transformer}
+\begin{center}
+\includegraphics[scale=.7]{../05-pictures/dimensione-cognitiva-5_pic_6.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Transformer}
+\begin{itemize}
+\item Potremmo utilizzare la parte di encoder per compiti che richiedono la comprensione della frase di input, come la sentiment analysis delle frasi o il riconoscimento delle entità (persone, organizzazioni ecc.). 
+\item Viceversa, possiamo generare un testo utilizzando unicamente la parte di decoder.
+\item I ricercatori di Google non solo rendono pubblica la scoperta con il loro articolo, ma divulgano il codice che permette a tutti di riprodurla – la rendono \textbf{open source} – donandola al mondo della ricerca. 
+\item Ed è qui che tutto è cambiato: questo ha fatto sì che tutti quelli con una connessione a Internet potessero lavorare sui transformers.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Transformer}
+\begin{itemize}
+\item Il mondo ha iniziato a capirne il potenziale costruendo modelli sempre più grandi, che passavano da leggere una frase alla volta fino a leggere un paragrafo intero. E più i modelli diventavano grandi, più l’interazione tra le parole diventava interazione tra concetti, raggiungendo livelli di astrazione mai visti prima.
+
+\item Con la crescita dei modelli, cresceva anche la loro fame di dati, la loro complessità e il loro costo. GPT-3 ha richiesto svariati milioni di euro solo per pagare le bollette della luce dei computer che lo hanno addestrato.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Transformer}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-5_pic_7.png} 
+\end{center}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{In Conclusione...}
+%
+%..................................................................
+%
+\begin{frame}{Geometria e Probabilità}
+\begin{itemize}
+\item Lo spazio dei dati è come un territorio immenso
+\item Immaginate tutte le possibili immagini, testi, musiche o video che potrebbero mai esistere come punti in un territorio multidimensionale gigantesco. 
+\item Ogni contenuto reale occupa una piccola zona di questo territorio - per esempio, tutte le foto di gatti stanno raggruppate in una "regione gatti", tutte le sinfonie di Mozart in una "regione Mozart", e così via.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-5_pic_8.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-5_pic_9.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Geometria e Probabilità}
+\begin{itemize}
+\item Quando ChatGPT scrive, non solo sa che certe parole vanno insieme, ma sa anche quanto spesso vanno insieme. Sa che dopo "buongiorno" è molto probabile trovare "come va?" piuttosto che "elefante viola". L'AI ha imparato questa "mappa delle probabilità" dai dati di training.
+\item In sostanza, l'AI generativa crea contenuti che rispettano anche le "regole statistiche" di quanto certi tipi di contenuto sono comuni o rari nella realtà.
+\end{itemize}
+\vspace{0.5cm}
+\textbf{L’IA generativa segue un percorso in questo spazio astratto secondo regole statistiche e di ottimizzazione, non possiede alcun concetto di «verità»!!!}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-5_pic_10.png} 
+\end{center}
+\end{frame}
+%
+%=====================================================================
+%
+\end{document}
+%
+%=====================================================================
+%
+
+
+
+
+

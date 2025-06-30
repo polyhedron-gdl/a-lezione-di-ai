@@ -1,0 +1,651 @@
+\documentclass[aspectratio=169]{beamer}
+%
+%=====================================================================
+%
+\usetheme{Madrid}
+\usecolortheme{default}
+%
+%=====================================================================
+%
+% Pacchetti necessari
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{tcolorbox}
+%
+%=====================================================================
+%
+% Configurazione per i box colorati
+\newtcolorbox{examplebox}[1][]{
+    colback=green!5!white,
+    colframe=green!75!black,
+    title=#1,
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{warningbox}[1][]{
+    colback=red!5!white,
+    colframe=red!75!black,
+    title=#1,
+    fonttitle=\bfseries
+}
+
+\newtcolorbox{tipbox}[1][]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    title=#1,
+    fonttitle=\bfseries
+}
+%
+%=====================================================================
+%
+\title{Dimensione Operativa \\ 2. Prompt Engineering}
+\subtitle{Tecniche e Strategie per Ottimizzare l'Interazione con i Modelli AI}
+\setbeamercovered{transparent} 
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+\institute{A lezione di Intelligenza Artificiale} 
+\date{Siena - Giugno 2025} 
+%
+%=====================================================================
+%
+\begin{document}
+
+% Slide titolo
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Indice
+\begin{frame}{Indice}
+    \tableofcontents
+\end{frame}
+%
+%=====================================================================
+%
+\AtBeginSection[]
+{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	 	 	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+%__________________________________________________________________________
+%
+\section{Introduzione al Prompt Engineering}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Che cos'è il Prompt Engineering?}
+\begin{itemize}[<+->]
+    \item \textbf{Definizione}: L'arte e la scienza di progettare istruzioni efficaci per modelli di intelligenza artificiale
+    \item \textbf{Obiettivo}: Ottenere risposte più precise, utili e appropriate dall'AI
+    \item \textbf{Analogia}: Come dare indicazioni stradali chiare - più sono precise, migliore è il risultato
+    \item \textbf{Importanza}: La differenza tra una risposta generica e una soluzione perfetta per le nostre esigenze
+\end{itemize}
+
+\pause
+\begin{examplebox}[Esempio Pratico]
+\textbf{Prompt generico}: "Spiegami la fotosintesi"\\
+\textbf{Prompt ottimizzato}: "Spiega la fotosintesi a studenti di seconda media usando un linguaggio semplice, con un esempio pratico e una metafora facile da ricordare"
+\end{examplebox}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Perché è Important per gli Educatori?}
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\textbf{Vantaggi per l'insegnamento:}
+\begin{itemize}
+    \item Preparazione rapida di materiali didattici
+    \item Creazione di esercizi personalizzati
+    \item Spiegazioni adattate al livello degli studenti
+    \item Generazione di esempi creativi
+    \item Supporto nella valutazione
+\end{itemize}
+\end{column}
+\begin{column}{0.4\textwidth}
+\begin{tipbox}[Ricorda]
+L'AI è uno strumento potente, ma la qualità dell'output dipende dalla qualità dell'input che forniamo!
+\end{tipbox}
+\end{column}
+\end{columns}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Obiettivi Principali del Prompt Engineering}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{I Quattro Obiettivi Fondamentali}
+\begin{enumerate}[<+->]
+\Large
+    \item \textbf{Precisione}: Ottenere informazioni accurate e specifiche
+    \item \textbf{Rilevanza}: Ricevere contenuti pertinenti al contesto
+    \item \textbf{Chiarezza}: Avere spiegazioni comprensibili per il target
+    \item \textbf{Completezza}: Coprire tutti gli aspetti necessari dell'argomento
+\end{enumerate}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\centering
+%\begin{center}
+\begin{tikzpicture}
+\node[draw, circle, fill=blue!20, minimum size=2cm] at (0,0) {\textbf{Prompt Perfetto}};
+\node[draw, rectangle, fill=green!20] at (-2.5,1.5) {Preciso};
+\node[draw, rectangle, fill=yellow!20] at (2.5,1.5) {Rilevante};
+\node[draw, rectangle, fill=orange!20] at (-2.5,-1.5) {Chiaro};
+\node[draw, rectangle, fill=red!20] at (2.5,-1.5) {Completo};
+\draw[->] (-1.8,1.2) -- (-0.7,0.7);
+\draw[->] (1.8,1.2) -- (0.7,0.7);
+\draw[->] (-1.8,-1.2) -- (-0.7,-0.7);
+\draw[->] (1.8,-1.2) -- (0.7,-0.7);
+\end{tikzpicture}
+%\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Esempio: Evoluzione di un Prompt}
+\begin{examplebox}[Versione Base]
+"Crea un quiz di matematica"
+\end{examplebox}
+
+\pause
+\begin{examplebox}[Versione Migliorata]
+"Crea un quiz di matematica per studenti di seconda media sulle frazioni, con 5 domande a risposta multipla di difficoltà crescente"
+\end{examplebox}
+
+\pause
+\begin{examplebox}[Versione Ottimizzata]
+"Crea un quiz di matematica per studenti di seconda media sulle frazioni. Includi 5 domande a risposta multipla con difficoltà crescente. Per ogni domanda fornisci: la spiegazione della risposta corretta, un suggerimento per risolvere problemi simili, e una breve spiegazione dell'errore più comune. Usa esempi pratici dalla vita quotidiana."
+\end{examplebox}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Tecniche Fondamentali}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{1. Specificità e Contesto}
+\textbf{Principio}: Più dettagli fornisci, migliori saranno i risultati
+\vspace{1cm}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Prompt Vago:}
+\begin{itemize}
+    \item "Spiegami la storia"
+    \item "Aiutami con la lezione"
+    \item "Crea un esercizio"
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Prompt Specifico:}
+\begin{itemize}
+    \item "Spiegami la Rivoluzione Francese per studenti di terza media"
+    \item "Aiutami a creare una lezione di 45 minuti sui vulcani"
+    \item "Crea 3 problemi di geometria sui triangoli per verifica"
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\vspace{1cm}
+\large
+\begin{tipbox}[Elementi da Specificare]
+\textbf{Chi}: Target audience (età, livello)\\
+\textbf{Cosa}: Argomento specifico\\
+\textbf{Come}: Formato desiderato\\
+\textbf{Perché}: Obiettivo/scopo
+\end{tipbox}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{2. Definizione del Ruolo}
+\begin{itemize}
+\normalsize
+\item Un prompt che inizia con "Agisci come..." è estremamente utile per indirizzare l'intelligenza artificiale a rispondere o comportarsi in modo specifico, assumendo un ruolo o un punto di vista. 
+\item Questo approccio permette di ottenere risposte più contestualizzate e rilevanti rispetto a un problema o a una situazione particolare. 
+\item Permette all'AI di adattare il tono, il linguaggio e il livello di complessità in base alle esigenze specifiche; 
+\item E' applicabile a diversi ambiti, come simulazioni di docenti, consulenti o esperti in una materia.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{2. Definizione del Ruolo}
+\textbf{Tecnica}: Assegna un ruolo specifico all'AI per ottenere risposte più mirate
+
+\begin{examplebox}[Esempi di Ruoli]
+\textbf{Per Matematica}: "Agisci come un insegnante di matematica esperto con 20 anni di esperienza nelle scuole medie..."
+
+\textbf{Per Scienze}: "Sei un divulgatore scientifico che sa spiegare concetti complessi in modo semplice..."
+
+\textbf{Per Letteratura}: "Comportati come un critico letterario che ama rendere la letteratura accessibile ai giovani..."
+\end{examplebox}
+
+\pause
+\textbf{Perché funziona?}
+\begin{itemize}
+    \item L'AI adotta il linguaggio e l'approccio del ruolo
+    \item Fornisce risposte più coerenti con l'expertise richiesta
+    \item Mantiene uno stile appropriato per tutto l'output
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{3. Esempi e Modelli (Few-Shot Learning)}
+\textbf{Principio}: Mostra all'AI il formato desiderato con esempi concreti
+
+\begin{examplebox}[Esempio Pratico - Creazione Domande]
+\textbf{Prompt}: "Crea domande di comprensione del testo seguendo questo formato:
+
+\textbf{Esempio 1:}
+Testo: 'Il cane corre nel parco'
+Domanda: Dove corre il cane?
+Risposta: Nel parco
+Tipo: Comprensione letterale
+
+Ora crea 3 domande simili per questo testo: 'Maria studia matematica in biblioteca ogni pomeriggio per prepararsi all'esame.'"
+\end{examplebox}
+
+\pause
+\textbf{Vantaggi}:
+\begin{itemize}
+    \item Formato consistente
+    \item Risultati prevedibili
+    \item Facile da replicare
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{4. Istruzioni Strutturate}
+\textbf{Tecnica}: Organizza le richieste in sezioni chiare
+
+\begin{examplebox}[Modello di Prompt Strutturato]
+\textbf{CONTESTO}: Stai preparando una lezione di scienze per studenti di prima media
+
+\textbf{COMPITO}: Spiega il ciclo dell'acqua
+
+\textbf{FORMATO}: 
+- Introduzione accattivante
+- 4 fasi principali con spiegazioni semplici
+- Un'attività pratica
+- 3 domande di verifica
+
+\textbf{STILE}: Linguaggio adatto a ragazzi di 11-12 anni, usa esempi dalla vita quotidiana
+
+\textbf{LUNGHEZZA}: Circa 300 parole per la spiegazione
+\end{examplebox}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{5. Raffinamento Iterativo}
+\textbf{Approccio}: Migliora progressivamente il prompt attraverso tentativi successivi
+
+\begin{center}
+\begin{tikzpicture}[
+  node distance = 4cm,      % più spazio fra i centri
+  >=stealth,                % frecce più carine (facoltativo)
+]
+\node[draw, rectangle, fill=blue!20] (start) {Prompt Iniziale};
+\node[draw, rectangle, fill=yellow!20, right of=start] (test) {Test Risultato};
+\node[draw, rectangle, fill=green!20, right of=test] (refine) {Raffina Prompt};
+\node[draw, rectangle, fill=red!20, right of=refine] (final) {Risultato Ottimale};
+
+\draw[->] (start) -- (test);
+\draw[->] (test) -- (refine);
+\draw[->] (refine) -- (final);
+\draw[->] (refine) to[bend left=60] (test);
+\end{tikzpicture}
+\end{center}
+
+\pause
+\begin{tipbox}[Strategia di Raffinamento]
+\begin{enumerate}
+    \item Inizia con un prompt semplice
+    \item Analizza cosa manca o non funziona
+    \item Aggiungi dettagli specifici
+    \item Testa nuovamente
+    \item Ripeti fino a soddisfazione
+\end{enumerate}
+\end{tipbox}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Esempi Pratici per l'Insegnamento}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Esempio 1: Creazione di Materiale Didattico}
+\textbf{Scenario}: Preparare una spiegazione dell'apparato respiratorio
+
+\begin{examplebox}[Prompt Ottimizzato]
+"Agisci come un insegnante di scienze esperto. Crea una spiegazione dell'apparato respiratorio per studenti di seconda media. 
+
+\textbf{Struttura richiesta}:
+1. Introduzione con una metafora efficace
+2. Descrizione dei principali organi (polmoni, trachea, bronchi)
+3. Spiegazione del processo di respirazione in 3 passaggi semplici
+4. Un'analogia con oggetti familiari
+5. 2 curiosità interessanti
+6. Un esperimento semplice da fare in classe
+
+\textbf{Linguaggio}: Adatto a ragazzi di 12-13 anni, evita termini troppo tecnici.
+\textbf{Lunghezza}: 400-500 parole"
+\end{examplebox}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Esempio 2: Creazione di Esercizi Personalizzati}
+\textbf{Scenario}: Creare problemi di matematica adattati
+
+\begin{examplebox}[Prompt per Esercizi]
+"Sei un esperto creatore di esercizi di matematica. Crea 5 problemi sulle percentuali per studenti di seconda media con queste caratteristiche:
+
+\textbf{Livello}: Progressivo (dal più facile al più difficile)
+\textbf{Contesto}: Situazioni reali che interessano i ragazzi (sport, videogiochi, social media, shopping)
+\textbf{Formato}: 
+- Testo del problema
+- Operazioni da svolgere
+- Risultato
+- Spiegazione passo-passo
+- Un suggerimento per problemi simili
+
+\textbf{Stile}: Coinvolgente e relazionabile per pre-adolescenti"
+\end{examplebox}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Esempio 3: Supporto alla Valutazione}
+\textbf{Scenario}: Creare criteri di valutazione chiari
+
+\begin{examplebox}[Prompt per Rubrica]
+"Agisci come un esperto in valutazione scolastica. Crea una rubrica di valutazione per un tema di antologia sul racconto di avventura.
+
+\textbf{Parametri da valutare}:
+- Contenuto e creatività
+- Struttura narrativa
+- Uso della lingua italiana
+- Originalità
+
+\textbf{Livelli}: Eccellente (10), Buono (8-9), Sufficiente (6-7), Insufficiente (4-5)
+
+\textbf{Formato}: Tabella con descrittori specifici per ogni livello e suggerimenti per il miglioramento.
+
+\textbf{Target}: Studenti di prima media, linguaggio comprensibile anche per gli studenti"
+\end{examplebox}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Errori Comuni e Come Evitarli}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{I 5 Errori Più Comuni}
+\begin{enumerate}[<+->]
+    \item \textbf{Prompt troppo generici}
+    \vspace{0.2cm}
+    \begin{warningbox}[Sbagliato]
+    "Aiutami con una lezione di storia"
+    \end{warningbox}
+    \begin{examplebox}[Corretto]
+    "Aiutami a creare una lezione di 50 minuti sulla Seconda Guerra Mondiale per terza media, con focus sulle cause del conflitto"
+    \end{examplebox}
+    
+    \item \textbf{Non specificare il target}
+    \vspace{0.2cm}
+    \begin{warningbox}[Sbagliato]
+    "Spiega la fotosintesi"
+    \end{warningbox}
+    \begin{examplebox}[Corretto]
+    "Spiega la fotosintesi a studenti di prima media usando un linguaggio semplice"
+    \end{examplebox}
+\end{enumerate}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Altri Errori da Evitare}
+\begin{enumerate}
+    \setcounter{enumi}{2}
+    \item \textbf{Aspettarsi perfezione al primo tentativo}
+    \begin{itemize}
+        \item Il prompt engineering è un processo iterativo
+        \item Testa e raffina progressivamente
+    \end{itemize}
+    
+    \item \textbf{Non fornire esempi quando necessario}
+    \begin{itemize}
+        \item Per formati specifici, mostra sempre un esempio
+        \item L'AI impara meglio vedendo il modello desiderato
+    \end{itemize}
+    
+    \item \textbf{Dimenticare il contesto disciplinare}
+    \begin{itemize}
+        \item Specifica sempre la materia e il livello scolastico
+        \item Indica eventuali prerequisiti o limitazioni
+    \end{itemize}
+\end{enumerate}
+
+\pause
+\begin{tipbox}[Consiglio Pratico]
+Tieni un "diario dei prompt" con quelli che funzionano meglio per riutilizzarli!
+\end{tipbox}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Strumenti e Suggerimenti Pratici}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Template di Prompt per Docenti}
+\begin{examplebox}[Modello Base Universale]
+\textbf{RUOLO}: Sei un [insegnante di X materia] esperto
+
+\textbf{COMPITO}: [Descrizione specifica del compito]
+
+\textbf{TARGET}: Studenti di [classe] media ([età] anni)
+
+\textbf{FORMATO}: 
+- [Specifica struttura desiderata]
+- [Lunghezza approssimativa]
+- [Elementi obbligatori]
+
+\textbf{STILE}: [Linguaggio adatto, tono, approccio]
+
+\textbf{VINCOLI}: [Limitazioni, cose da evitare]
+
+\textbf{OBIETTIVO}: [Cosa vuoi ottenere]
+\end{examplebox}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Checklist per Prompt di Qualità}
+\textbf{Prima di inviare il prompt, verifica:}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Contenuto}
+\begin{itemize}
+    \item[$\square$] Ruolo definito
+    \item[$\square$] Compito specifico
+    \item[$\square$] Target chiarito
+    \item[$\square$] Formato specificato
+    \item[$\square$] Esempi inclusi (se necessari)
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Qualità}
+\begin{itemize}
+    \item[$\square$] Linguaggio appropriato
+    \item[$\square$] Lunghezza indicata
+    \item[$\square$] Vincoli specificati
+    \item[$\square$] Obiettivo chiaro
+    \item[$\square$] Contesto completo
+\end{itemize}
+\end{column}
+\end{columns}
+
+\pause
+\vspace{1cm}
+\begin{tipbox}[Regola d'oro]
+Se un collega dovesse leggere il tuo prompt, capirebbe esattamente cosa vuoi ottenere?
+\end{tipbox}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Suggerimenti per l'Uso Quotidiano}
+\textbf{Integrate il prompt engineering nella vostra routine:}
+
+\begin{itemize}[<+->]
+    \item \textbf{Preparazione lezioni}: Create template per le vostre materie
+    \item \textbf{Creazione esercizi}: Mantenete una raccolta di prompt testati
+    \item \textbf{Valutazione}: Usate l'AI per creare rubriche e criteri
+    \item \textbf{Differenziazione}: Adattate contenuti per diversi livelli
+    \item \textbf{Creatività}: Brainstorming per attività innovative
+\end{itemize}
+
+\pause
+\vspace{0.5cm}
+\begin{warningbox}[Importante]
+Ricordate sempre di:
+\begin{itemize}
+    \item Verificare la correttezza delle informazioni
+    \item Adattare l'output alle vostre esigenze specifiche
+    \item Mantenere il vostro tocco personale nell'insegnamento
+\end{itemize}
+\end{warningbox}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Conclusioni e Prospettive Future}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Riassunto dei Punti Chiave}
+\textbf{Il Prompt Engineering vi permette di:}
+\begin{itemize}
+    \item \textbf{Risparmiare tempo} nella preparazione del materiale didattico
+    \item \textbf{Personalizzare} contenuti per i vostri studenti
+    \item \textbf{Innovare} le metodologie didattiche
+    \item \textbf{Supportare} la valutazione e il feedback
+    \item \textbf{Stimolare} la creatività nell'insegnamento
+\end{itemize}
+
+\pause
+\vspace{1cm}
+\textbf{Ricordate sempre:}
+\begin{center}
+\Large
+\textcolor{blue}{\textbf{La tecnologia è uno strumento,\\la pedagogia è l'arte!}}
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Prospettive Future}
+\textbf{L'evoluzione del prompt engineering nell'educazione:}
+
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\begin{itemize}
+    \item \textbf{Personalizzazione avanzata}: AI che si adatta ai singoli studenti
+    \item \textbf{Valutazione automatica}: Feedback immediato e dettagliato
+    \item \textbf{Contenuti multimediali}: Integrazione di testo, immagini, video
+    \item \textbf{Traduzione istantanea}: Supporto per studenti non italofoni
+    \item \textbf{Accessibilità}: Adattamenti per diverse esigenze speciali
+\end{itemize}
+\end{column}
+\begin{column}{0.4\textwidth}
+\begin{tipbox}[Il Futuro]
+L'AI diventerà un assistente sempre più sofisticato, ma il ruolo dell'insegnante rimarrà centrale nell'educazione!
+\end{tipbox}
+\end{column}
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Primi Passi Pratici}
+\textbf{Come iniziare da domani:}
+
+\begin{enumerate}
+    \item \textbf{Scegliete una materia} di vostra competenza
+    \item \textbf{Identificate un'esigenza} specifica (es: spiegazione difficile)
+    \item \textbf{Create il vostro primo prompt} usando i template mostrati
+    \item \textbf{Testate e raffinate} il risultato
+    \item \textbf{Documentate} cosa funziona per riutilizzarlo
+\end{enumerate}
+
+\pause
+\vspace{1cm}
+\begin{examplebox}[Sfida Personale]
+Impegnatevi a creare e testare almeno 3 prompt diversi questa settimana. Condividete i risultati con i colleghi!
+\end{examplebox}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Risorse e Approfondimenti}
+\textbf{Per continuare ad approfondire:}
+
+\begin{itemize}
+    \item \textbf{Comunità online}: Gruppi di docenti che condividono prompt
+    \item \textbf{Formazione continua}: Webinar e corsi specifici
+    \item \textbf{Sperimentazione}: La pratica è il miglior insegnante
+    \item \textbf{Collaborazione}: Lavorate in team con i colleghi
+\end{itemize}
+\end{frame}
+%
+%=====================================================================
+%
+\end{document}
+%
+%=====================================================================
+%

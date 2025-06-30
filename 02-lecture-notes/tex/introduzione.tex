@@ -1,0 +1,219 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usepackage{tikz}
+%
+%=====================================================================
+%
+\title{A Lezione di Intelligenza Artificiale}
+\subtitle{Dalle origini ai paradigmi moderni}
+\setbeamercovered{transparent} 
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+\institute{Istituto Comprensivo Cecco Angiolieri - Siena} 
+\date{24 e 25 Giugno 2025} 
+%
+%=====================================================================
+%
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Indice}
+\tableofcontents
+\end{frame}
+%
+%=====================================================================
+%
+\AtBeginSection[]
+{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	 	 	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+%__________________________________________________________________________
+%
+\section{Introduzione}
+%
+%..................................................................
+%
+\begin{frame}{Definire l'IA non è facile...}
+\begin{itemize}
+    \item Nessuna definizione universalmente accettata
+    \item L'IA come simulazione e modello dell'intelligenza umana
+    \item IA debole vs IA forte (Searle, 1984)
+    \item Crescente rilevanza del Machine Learning e dei sistemi data-driven
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Cos'è l'AI Literacy?}
+  \begin{itemize}
+    \item Comprendere come funziona l'intelligenza artificiale
+    \item Saper usare strumenti basati su AI
+    \item Riflettere sugli impatti etici, sociali e culturali
+    \item Partecipare attivamente ai dibattiti sull'uso dell'AI
+  \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Perché è importante l'AI Literacy?}
+  \begin{itemize}
+    \item L'AI è presente in molti aspetti della vita quotidiana
+    \item Crescente automazione del lavoro e delle decisioni
+    \item Necessità di cittadinanza digitale consapevole
+    \item Prevenire disuguaglianze digitali e discriminazioni algoritmiche
+    \item Implicazioni etiche, sociali ed educative
+  \end{itemize}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Il framework per l’AI Literacy}
+%
+%..................................................................
+%
+\begin{frame}{Il Framework: visione d’insieme}
+  \begin{itemize}
+    \item Il framework proposto si articola in quattro dimensioni fondamentali:
+    \vspace{0.2cm}
+    \begin{enumerate}
+    \normalsize
+      \item \textbf{Conoscitiva} (Sapere e comprendere l’IA)
+    \vspace{0.2cm}
+      \item \textbf{Operativa} (Saper usare e applicare l’IA)
+    \vspace{0.2cm}
+      \item \textbf{Critica} (Saper valutare e progettare artefatti di IA)
+    \vspace{0.2cm}
+      \item \textbf{Etica} (Uso consapevole e responsabile dell’IA)
+    \end{enumerate}
+    \vspace{.5cm}
+    \item Ogni dimensione include competenze chiave, obiettivi formativi e spunti didattici.
+  \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il Framework: visione d’insieme}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/introduzione_pic_0.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{1. Dimensione Cognitiva}
+  \textbf{Obiettivo:} Fornire le basi teoriche e concettuali sull’intelligenza artificiale.\\[1em]
+  \textbf{Competenze:}
+  \begin{itemize}
+    \item Comprendere cos’è l’IA e cosa può fare.
+    \item Conoscere le principali tipologie di IA (debole/forte, simbolica/sub-simbolica, ML, etc).
+    \item Ambito dei dati e dei potenziali problemi che derivano dai bias in essi contenuti (collegamento con la dimensione etica)
+    \item Comprendere i principi base del machine learning e delle reti neurali.
+  \end{itemize}
+  \textbf{Esempi di attività didattiche:}
+  \begin{itemize}
+    \item Classificazione e Regressione
+    \item Embeddings e Analisi del Linguaggio
+  \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{2. Dimensione Operativa}
+  \textbf{Obiettivo:} Abilitare all’uso consapevole e critico di strumenti basati su IA.\\[1em]
+  \textbf{Competenze:}
+  \begin{itemize}
+    \item Saper utilizzare strumenti e applicazioni che sfruttano l’IA.
+    \item Comprendere e rappresentare dati (Data Literacy).
+    \item Approcciarsi a semplici attività di programmazione di base e pensiero computazionale.
+    \item Saper applicare le funzionalità base dell’IA in contesti concreti.
+  \end{itemize}
+  \textbf{Esempi di attività didattiche:}
+  \begin{itemize}
+    \item Laboratori su chatbot, classificatori o applicazioni di riconoscimento immagini.
+    \item Esperienze pratiche di data visualization e interpretazione dei dati.
+    \item \textbf{In questa dimensione si inseriscono, ad esempio, le applicazioni per la didattica}
+  \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{3. Dimensione Critica}
+  \textbf{Obiettivo:} Sviluppare capacità di valutazione critica delle tecnologie IA e dei loro impatti.\\[1em]
+  \textbf{Competenze:}
+  \begin{itemize}
+    \item Analizzare e discutere l’affidabilità e la trasparenza degli algoritmi di IA.
+    \item Promuovere la spiegabilità (explainability) e la trasparenza degli algoritmi.
+    \item Comprendere il ruolo del bias nei dati e nei sistemi di IA.
+    \item Riflettere su limiti e potenzialità dell’IA in diversi contesti sociali.
+  \end{itemize}
+  \textbf{Esempi di attività didattiche:}
+  \begin{itemize}
+    \item Discussione di casi di bias o discriminazione algoritmica.
+    \item Analisi critica di applicazioni IA nella società (giustizia, sanità, lavoro)
+    \item \textbf{Questa è una dimensione FONDAMENTALE per l'insegnamento e l'apprendimento dell'AI}
+  \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{4. Dimensione Etica}
+  \textbf{Obiettivo:} Promuovere un uso responsabile, trasparente e centrato sulla persona delle tecnologie IA.\\[1em]
+  \textbf{Competenze:}
+  \begin{itemize}
+    \item Identificare rischi etici legati a privacy, sicurezza, trasparenza, equità.
+    \item Saper valutare la sostenibilità delle applicazioni IA per la società.
+    \item Promuovere la responsabilità e la consapevolezza nell’uso dell’IA.
+    \item Immaginare scenari futuri di impatto sociale ed economico dell’IA.
+  \end{itemize}
+  \textbf{Esempi di attività didattiche:}
+  \begin{itemize}
+    \item Simulazioni di processi decisionali supportati da IA (es. selezione CV, triage sanitario).
+    \item Discussione sulle linee guida etiche internazionali per l’IA (es. UNESCO, EU).
+  \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Sintesi del framework e prospettive educative}
+  \begin{itemize}
+    \item L’alfabetizzazione all’IA richiede approcci interdisciplinari e attività esperienziali.
+    \item Le competenze chiave non sono solo tecniche, ma anche critiche, sociali ed etiche.
+    \item I curricula dovrebbero essere flessibili, aggiornati e sensibili al contesto.
+    \item Collaborazione tra scuola, università, mondo del lavoro e società civile.
+  \end{itemize}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Conclusione}
+%
+%..................................................................
+%
+\begin{frame}{Conclusioni}
+\begin{itemize}
+    \item L'AI Literacy deve integrare dimensioni cognitive, critiche ed etiche
+    \item È fondamentale progettare percorsi formativi inclusivi
+    \item Serve ulteriore ricerca per raffinare framework e approcci
+    \item Obiettivo: educazione digitale consapevole e centrata sulla persona
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Prima di cominciare...}
+\begin{itemize}
+    \item Tutto il materiale del corso è liberamente disponibile al seguente repository GitHub
+    \item https://github.com/polyhedron-gdl
+\end{itemize}
+\end{frame}
+%
+%=====================================================================
+%
+\end{document}

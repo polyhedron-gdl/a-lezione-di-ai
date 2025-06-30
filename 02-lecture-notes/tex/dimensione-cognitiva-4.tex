@@ -1,0 +1,693 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+%
+%=====================================================================
+%
+% Tema e colori
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+%
+%=====================================================================
+%
+% Definizione colori personalizzati
+\definecolor{aiblue}{RGB}{30,144,255}
+\definecolor{mlgreen}{RGB}{46,139,87}
+\definecolor{datacolor}{RGB}{255,140,0}
+%
+%=====================================================================
+%
+\title{Dimensione Cognitiva \\ 4. Come le macchine comprendono il linguaggio}
+\subtitle{Embeddings e Spazi Semantici}
+\setbeamercovered{transparent} 
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+\institute{A lezione di Intelligenza Artificiale} 
+\date{Siena - Giugno 2025} 
+%
+%=====================================================================
+%
+\begin{document}
+
+% Slide titolo
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Indice
+\begin{frame}{Indice}
+    \tableofcontents
+\end{frame}
+%
+%=====================================================================
+%
+\AtBeginSection[]
+{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	 	 	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+%__________________________________________________________________________
+%
+\section{Parliamo (ancora) di Geometria}
+%
+%..................................................................
+%
+\begin{frame}{Che cos'è un Vettore}
+\begin{itemize}
+\item Immaginiamo di trovarci su un'isola immaginaria. 
+\item Su quest'isola ci sono varie attrazioni turistiche: un faro, un vulcano, una palma, una spiaggia, un castello. 
+\item Sono luoghi ben precisi, visibili e facilmente riconoscibili. \item Ora proviamo a fare un piccolo sforzo mentale: vogliamo \textbf{descrivere la posizione} di ciascuna attrazione in un modo chiaro, condivisibile e, soprattutto, \textbf{calcolabile}.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Che cos'è un Vettore}
+\begin{center}
+\includegraphics[scale=.35]{../05-pictures/dimensione-cognitiva-4_pic_0.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Dalle immagini alle coordinate} 
+
+Nel primo disegno, notiamo che l'isola è attraversata da due linee perpendicolari: una orizzontale (asse X, Est-Ovest) e una verticale (asse Y, Nord-Sud). Questo sistema di assi divide l'isola in quattro quadranti, e permette di assegnare a ogni luogo una \textbf{coppia di numeri}: le sue \textbf{coordinate}.
+
+Ad esempio:
+\begin{itemize}
+\item Il \textbf{Faro} si trova a sinistra e un po' in alto, in posizione (-3, 2)
+\item La \textbf{Spiaggia} è sulla destra e un po' in basso, in (4, -1)
+\item Il \textbf{Castello} è a destra e in basso, in (3, -2)
+\end{itemize}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Che cos'è un Vettore}
+\begin{center}
+\includegraphics[scale=.35]{../05-pictures/dimensione-cognitiva-4_pic_1.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Dalle coordinate al concetto di vettore}
+\begin{itemize}
+\item Finora abbiamo parlato di "punti" su una mappa. Ma se ora immaginiamo di voler \textbf{muoverci} da un punto all'altro — ad esempio dal faro al vulcano — abbiamo bisogno di qualcosa che non dica solo \textbf{dove siamo}, ma anche \textbf{come spostarci}.
+
+\item Qui entra in gioco il \textbf{vettore}.
+
+\item Un \textbf{vettore} è una \textbf{freccia che unisce due punti}, indicando:\\
+
+1. \textbf{direzione} (verso dove andare)\\
+2. \textbf{verso} (da dove a dove)\\
+3. \textbf{lunghezza} (quanto spostarsi)\\
+\end{itemize}
+\vspace{.2cm}
+\small
+Ad esempio, il vettore che va dal Faro al Vulcano dice: "spostati di 7 unità verso Est (da -4 a 3) e di 1 unità verso Nord (da 2 a 3)". Questo lo possiamo scrivere come il vettore \textbf{(7, 1)}.
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il salto concettuale: spazio vettoriale}
+
+Quando iniziamo a lavorare con vettori, ci accorgiamo che hanno delle proprietà molto interessanti:
+\begin{itemize}
+\item Possiamo \textbf{sommarli} (fare un tragitto in due tappe)
+\item Possiamo \textbf{scalarli} (fare lo stesso tragitto ma due volte più lungo)
+\item Possiamo \textbf{confrontare} vettori che hanno la stessa direzione, verso e lunghezza, anche se partono da punti diversi
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il salto concettuale: spazio vettoriale}
+
+\begin{itemize}
+\item Tutto questo avviene in quello che in matematica si chiama \textbf{spazio vettoriale}: un insieme di vettori su cui è possibile fare queste operazioni in modo coerente.
+\item Nel nostro caso, lo spazio è il piano delle coordinate (X, Y), dove ogni vettore è rappresentato da una coppia di numeri. 
+\item È come un linguaggio universale per descrivere spostamenti e posizioni.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{In sintesi...}
+\begin{itemize}
+\item Ogni attrazione turistica dell'isola ha una \textbf{posizione}, data da una \textbf{coppia di coordinate} (x, y)
+\item Ogni \textbf{spostamento} da un punto a un altro può essere rappresentato come un \textbf{vettore}
+\item I vettori hanno direzione, verso e lunghezza
+\item Insieme, i vettori formano uno \textbf{spazio vettoriale}, una struttura matematica che ci permette di analizzare e combinare movimenti e relazioni spaziali
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un altro passo verso l'astrazione}
+
+\textbf{Misurare caratteristiche non spaziali}\\
+\vspace{.5cm}
+Abbiamo compreso che un vettore nello spazio tridimensionale è rappresentato da tre numeri (le coordinate cartesiane x, y, z). Ad esempio:
+\begin{itemize}
+\item La posizione di una città può essere identificata da tre coordinate geografiche.
+\item Un punto in una stanza può essere identificato da tre coordinate (lunghezza, larghezza, altezza).
+\end{itemize}
+
+In questi casi le coordinate rappresentano letteralmente una posizione nello spazio fisico, quello a cui siamo abituati.
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un altro passo verso l'astrazione}
+
+\textbf{Misurare caratteristiche non spaziali}\\
+\vspace{0.5cm}
+
+Adesso facciamo un piccolo passo verso l'astrazione, usando sempre dei vettori con coordinate numeriche, ma stavolta non riferite a posizioni nello spazio. Per esempio, immaginiamo di voler rappresentare delle persone attraverso alcune caratteristiche misurabili numericamente:\\
+\vspace{.3cm}
+\begin{center}
+\textbf{Persona → (età, peso, altezza)}\\
+\end{center}
+\vspace{.3cm}
+In questo modo, una persona può essere vista come un "punto" in uno spazio astratto definito da queste tre dimensioni: età, peso e altezza. Ad esempio:\\
+\vspace{.3cm}
+- Mario: (30 anni, 75 kg, 180 cm)\\
+- Lucia: (28 anni, 62 kg, 165 cm)
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un altro passo verso l'astrazione}
+
+\textbf{Misurare caratteristiche non spaziali}\\
+\vspace{0.5cm}
+\begin{itemize}
+\item \textbf{In questo "spazio delle persone"}, due individui con caratteristiche simili (ad esempio età simile, altezza simile) saranno due "punti" vicini tra loro.
+\vspace{.3cm}
+\item Notiamo che, anche se parliamo ancora di numeri semplici, qui abbiamo fatto un primo passo verso l'astrazione: non siamo più nello spazio fisico, ma in uno spazio di \textbf{caratteristiche numeriche}.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un ulteriore passo verso l’astrazione}
+
+\textbf{Includere caratteristiche non numeriche (qualitative)}\\
+\vspace{0.5cm}
+\begin{itemize}
+\item Ora facciamo un altro piccolo passo avanti: aggiungiamo caratteristiche non immediatamente numeriche ma che possiamo rappresentare numericamente.
+\item Immaginiamo ad esempio di voler rappresentare dei film tramite vettori numerici, usando alcune caratteristiche come:\\
+\vspace{0.3cm}
+- Quanto è comico (da 0 a 10)     \\ \vspace{0.2cm}
+- Quanto è drammatico (da 0 a 10) \\ \vspace{0.2cm}
+- Quanto è romantico (da 0 a 10)
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un ulteriore passo verso l’astrazione}
+
+\textbf{Includere caratteristiche non numeriche (qualitative)}\\
+\vspace{0.5cm}
+
+Ogni film potrebbe essere descritto da un vettore di tre numeri che rappresentano intensità di caratteristiche qualitative:
+
+- Film A (molto comico, poco drammatico, medio romantico): (8, 2, 5)\\
+- Film B (poco comico, molto drammatico, molto romantico): (1, 9, 8)\\
+\vspace{0.5cm}
+In questo \textbf{spazio astratto}, due film simili si troveranno "vicini" tra loro, proprio come due città vicine in una mappa, anche se lo spazio non ha più nulla a che vedere con posizioni fisiche.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il salto finale}
+\textbf{Rappresentare concetti astratti come le parole}\\
+\vspace{0.5cm}
+
+Finalmente, siamo pronti per il salto finale, quello più astratto di tutti:\\
+\vspace{0.3cm}
+\emph{E se provassimo a rappresentare \textbf{il significato delle parole} con numeri?}\\
+\vspace{0.3cm}
+
+L'idea del word embedding nasce proprio qui: rappresentare una parola come una lista di numeri (un vettore), ciascuno dei quali esprime quanto la parola è associata a concetti o contesti particolari.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il salto finale}
+\textbf{Rappresentare concetti astratti come le parole}\\
+\vspace{0.5cm}
+
+Ad esempio, per le parole "gatto", "cane" e "automobile", un modello intelligente potrebbe assegnare coordinate numeriche in modo che:
+\begin{itemize}
+\item "gatto" = (8, 9, 1, ...)
+\item "cane" = (7.5, 9.2, 1.5, ...)
+\item "automobile" = (0.5, 1, 9.5, ...)
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il salto finale}
+\textbf{Rappresentare concetti astratti come le parole}\\
+\vspace{0.5cm}
+
+Anche se queste coordinate non sono più interpretabili facilmente una ad una (sono prodotte automaticamente dai modelli di AI), si mantengono due proprietà importanti
+\begin{itemize}
+\item Parole con significati simili hanno vettori vicini nello spazio astratto.
+\item Parole con significati molto diversi hanno vettori lontani.
+\end{itemize}
+
+Quindi, come nello spazio ordinario:\\
+\vspace{.3cm}
+- Vicinanza geografica → città vicine.\\
+- Vicinanza astratta → significati vicini.
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Riassunto del percorso fatto}
+\begin{center}
+\includegraphics[scale=.65]{../05-pictures/dimensione-cognitiva-4_pic_2.png} 
+\end{center}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Passare dalle parole ai ... Numeri!}
+%
+%..................................................................
+%
+\begin{frame}{Il modello Bag of Words}
+\begin{itemize}
+\item Immaginiamo che la nostra macchina capisca solo un piccolo dizionario di poche parole. Per costruire i vettori che rappresentano le frasi date utilizzando il metodo \textbf{Bag of Words}, inizieremo creando un dizionario con questi termini. 
+
+\item Nella \textbf{Bag of Words} ogni frase è trasformata in un vettore, lungo esattamente come il vocabolario, nel quale ad ogni elemento corrisponde una parola del dizionario.
+
+\end{itemize}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-4_pic_3.png} 
+\end{center}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il modello Bag of Words}
+\begin{itemize}
+\small
+\item Il valore di ciascun elemento del vettore verrà calcolato contando la frequenza di ciascuna parola. Se una parola del dizionario non appare nella frase il suo conteggio sarà $0$. Se appare una o più volte, il valore sarà pari a $1$ o al numero totale di volte che la parola appare nella frase.
+\end{itemize}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-4_pic_4.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il modello Bag of Words}
+Sembra funzionare, ogni frase ha il suo vettore. Ma quando proviamo frasi più complesse come le seguenti
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-4_pic_5.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il modello Bag of Words}
+\begin{itemize}
+\item Ci accorgiamo che entrambe le frasi hanno la stessa rappresentazione vettoriale. 
+\item Questo significa che, secondo questo modello, le frasi avranno il medesimo significato! 
+\item Tuttavia le due frasi hanno significati opposti e questo dimostra chiaramente uno dei principali limiti di questo metodo nell'analisi del linguaggio naturale.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Apprendere il Significato dal Contesto}
+\begin{itemize}
+\item Coscienti di questi limiti i ricercatori hanno sviluppato modelli che partono dall'assunto che le parole che appaiono frequentemente vicine le une alle altre hanno significati più strettamente collegati. 
+\item Quindi l'ipotesi è che analizzando le parole all'interno di una certa finestra di contesto attorno ad una parola target il modello possa apprendere rappresentazioni più precise.
+\end{itemize}
+\vspace{0.5cm}
+\centering
+\textbf{"Era una ..... buia e tempestosa"}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Cos'è un word embedding?}
+\begin{itemize}
+\item Un \textbf{word embedding} è un modo per rappresentare una parola come una \textbf{sequenza di numeri} (un vettore), così che i computer possano lavorare con le parole in modo simile a come fanno con i numeri.
+\item Ma non sono numeri qualsiasi. 
+\item A differenza del modello BoW, ogni numero nel vettore \textbf{porta con sé un significato}, perché è stato appreso analizzando milioni di frasi e testi. 
+\item In altre parole, i vettori \textbf{catturano il significato} delle parole basandosi su come queste vengono usate nel linguaggio.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Cosa vuol dire “dimensione” in un word embedding?}
+\begin{itemize}
+\item Immaginate che ogni parola venga trasformata in un vettore con, ad esempio, \textbf{300 numeri}. 
+\item Ogni numero è una coordinata lungo una particolare \textbf{dimensione} dell'embedding.
+\end{itemize}
+\vspace{0.3cm}
+\small
+Ora: queste \textbf{dimensioni non sono etichette esplicite}, ma rappresentano \textbf{sfumature di significato} che l'algoritmo ha imparato da solo. Alcune di queste dimensioni possono (in modo implicito) rappresentare:
+
+- il concetto di \textbf{maschile vs femminile}\\
+- il grado di \textbf{astrazione} di una parola\\
+- la sua \textbf{carica emotiva} (positiva/negativa)\\
+- il legame con \textbf{luoghi} o \textbf{tempi}\\
+- la \textbf{categoria grammaticale} (sostantivo, verbo...)\\
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Cosa si intende per "dimensione semantica"?}
+
+Una \textbf{dimensione semantica} è quindi \textbf{una direzione nello spazio dei significati}, lungo la quale possiamo cogliere un cambiamento semantico specifico.\\
+
+Un esempio molto noto:
+\begin{itemize}
+\item Prendiamo i vettori delle parole "re" (king), "regina" (queen), "uomo" (man) e "donna" (woman)
+\item \textbf{re - uomo + donna = regina}
+\item In questo caso, la \textbf{differenza tra "re" e "uomo"} può essere interpretata come una \textbf{dimensione semantica di regalità}, e la \textbf{differenza tra "uomo" e "donna"} come una \textbf{dimensione semantica di genere}.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un'analogia visiva}
+
+Immaginate uno spazio tridimensionale:
+\begin{itemize}
+\item L’asse X potrebbe rappresentare \textbf{il grado di positività} della parola
+\item L’asse Y il \textbf{campo semantico} (es. "cibo", "emozione", "luogo")
+\item L’asse Z il \textbf{livello di concretezza} (oggetti tangibili vs concetti astratti)
+\end{itemize}
+\vspace{.3cm}
+Una parola come \textbf{"cioccolato"} potrebbe avere coordinate (8, 2, 9), mentre \textbf{"libertà"} potrebbe stare a (5, 8, 1).\\
+\vspace{0.3cm}
+In un vero word embedding ci sono \textbf{molte più dimensioni} (50, 100, 300...), ma il concetto è lo stesso: ogni direzione rappresenta \textbf{una possibile variazione di significato}.
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Riassumendo...}
+\begin{itemize}
+\item Una \textbf{dimensione semantica} in un word embedding è una direzione nello spazio matematico che riflette \textbf{una caratteristica latente del significato} delle parole, appresa dai dati.
+\item Non sempre sappiamo \textbf{cosa} rappresenta esattamente ogni dimensione, ma possiamo studiarle osservando come le parole si posizionano e si muovono nello spazio.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un'analogia visiva}
+\begin{center}
+\includegraphics[scale=.5]{../05-pictures/dimensione-cognitiva-4_pic_6.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un'analogia visiva}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-4_pic_7.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Cosa rappresenta questa visualizzazione?}
+\begin{itemize}
+\item Le \textbf{parole sono punti} in uno spazio dove la distanza e la posizione \textbf{riflettono caratteristiche semantiche}.
+\item Se due parole sono vicine, significa che \textbf{hanno significati simili} lungo le dimensioni scelte.
+\item Se sono lontane, rappresentano \textbf{concetti diversi}.
+\end{itemize}
+\vspace{0.3cm}
+\textbf{Esempi interpretativi}\\
+\vspace{0.3cm}
+\small
+- "gatto" e "cane" sono vicini → entrambi viventi, taglia simile\\
+- "camion" e "automobile" sono vicini → non viventi, grandi, tecnologici\\
+- "pietra" è isolata → non è vivente, non è tecnologica, è piccola\\
+- "drone" è vicino alle auto → tecnologico, ma più piccolo
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Addizione e Sottrazione di Vettori}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-4_pic_8.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Prodotto di Vettori: $a \cdot b = a_1b_1+a_2b_2 + \dots +a_nb_n$}
+\begin{itemize}
+\item Il prodotto fra vettori può essere in qualche modo relazionato al concetto di similarità. 
+\item Geometricamente il prodotto scalare misura quanto due vettori sono \textbf{allineati}. 
+\item Un prodotto scalare pari a zero indica che i vettori sono perpendicolari mentre un valore maggiore di zero indica un certo grado di allineamento nella stessa direzione e un numero minore di zero indica che sono più o meno allineati ma puntano in direzioni opposte.
+\end{itemize}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-4_pic_9.png} 
+\end{center}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Come si generano gli embeddings?}
+%
+%..................................................................
+%
+\begin{frame}{Word2Vec}
+\begin{itemize}
+\item Un modello come \textbf{word2vec} impara gli embeddings (rappresentazioni numeriche delle parole) basandosi su un principio semplice:\\ 
+\begin{center}
+\textbf{parole simili appaiono in contesti simili}.
+\end{center}
+\vspace{.5cm}
+\item Per esempio, le parole "gatto" e "cane" spesso compaiono vicine a parole come "animale", "cibo" o "giocare", mentre "auto" e "bicicletta" appaiono vicine a parole come "guidare", "strada", "velocità".
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Word2Vec}
+Ecco, passo per passo, come funziona in maniera molto semplificata:
+
+1. \textbf{Scansione di un testo}:  
+   Il modello legge tantissime frasi e osserva quali parole si trovano spesso vicine tra loro.
+
+2. \textbf{Addestramento}:  
+   Il modello cerca di prevedere, data una parola, quali parole tendono ad apparire vicine. Ad esempio, data la parola "gatto", il modello cerca di indovinare parole come "miagolare" o "croccantini".
+
+3. \textbf{Conversione in numeri (embeddings)}:  
+   Durante questo allenamento, il modello assegna automaticamente a ogni parola dei valori numerici (i vettori di embedding appunto) che cercano di catturare queste relazioni facendo in modo che parole con significati o usi simili abbiano embeddings numerici molto simili tra loro.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Word2Vec}
+
+Il modello \textbf{word2vec} assegna a ciascuna parola dei valori numerici (embeddings) attraverso una procedura molto semplice, che si basa su tentativi ed errori e piccoli aggiustamenti continui:
+\begin{itemize}
+\item 1. \textbf{Inizia in modo casuale}. All’inizio, ogni parola viene associata a una sequenza di numeri casuali.
+
+\item 2. \textbf{Gioco di "indovina la parola"}. Il modello prende una parola dal testo, ad esempio "gatto", e prova a prevedere quali altre parole spesso compaiono vicino ad essa (ad esempio "mangia", "gioca", "miagola"). Se il modello riesce a prevedere correttamente le parole vicine, allora i numeri (embeddings) assegnati sono buoni. Se sbaglia, vuol dire che i numeri devono essere modificati.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Word2Vec}
+\begin{itemize}
+\item 3. \textbf{Impara dagli errori}. Quando il modello sbaglia, cambia leggermente i valori numerici delle parole coinvolte per migliorare la previsione futura. Le parole che compaiono spesso insieme nel testo, progressivamente, avranno valori numerici sempre più simili tra loro.
+
+\item 4. \textbf{Ripeti molte volte}. Il modello ripete questo processo moltissime volte, su milioni di frasi e parole. A ogni ripetizione, i valori numerici si aggiustano leggermente fino a diventare sempre più precisi. Alla fine del processo, parole che appaiono in contesti simili finiscono per avere valori numerici molto vicini tra loro, parole con significati molto diversi avranno valori numerici più distanti.
+\end{itemize}
+\vspace{0.5cm}
+Questo meccanismo è ciò che permette a \textbf{word2vec} di catturare e rappresentare numericamente i significati e le relazioni tra le parole.
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Word2Vec}
+\begin{center}
+\includegraphics[scale=.35]{../05-pictures/dimensione-cognitiva-4_pic_10.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Uso degli embeddings}
+
+\textbf{Come vengono utilizzati gli embeddings nel mondo dell'IA Generativa?}\\
+\vspace{0.5cm}
+\begin{itemize}
+\item ChatGPT usa gli embeddings per capire il significato delle parole. 
+\item Parola per parola, frase per frase per poi generare del testo. \item Noi abbiamo parlato di embeddings semplici a poche dimensioni, abbiamo parlato di Word2Vec che usa 300 dimensioni, ma giusto per darvi un'idea gli \textbf{embeddings} usati da ChatGPT usano \textbf{12888 dimensioni!}
+\end{itemize}
+\end{frame}
+%
+%=====================================================================
+%
+\end{document}
+%
+%=====================================================================
+%
+
+
+
+
+
+
+
+
+
+
+
+Alla fine, ogni parola è rappresentata da una sequenza di numeri (un vettore), che racchiude in sé il suo significato e i suoi rapporti con tutte le altre parole osservate.
+
+Questo permette ai modelli di usare direttamente questi vettori numerici per calcolare similarità e analogie tra le parole, facendo operazioni matematiche molto semplici.
+
+%
+%..................................................................
+%
+\begin{frame}{}
+- \textbf{Fase iniziale: parole e numeri casuali}
+
+Immagina che ogni parola, all'inizio, sia associata a una sequenza casuale di numeri (un "embedding iniziale").
+
+Ad esempio, semplificando:
+
+- \textbf{gatto} → "[0.2, 0.6, 0.3]"
+- \textbf{mangia} → "[0.8, 0.1, 0.5]"
+- \textbf{cane} → "[0.4, 0.9, 0.7]"
+- \textbf{miagola} → "[0.3, 0.2, 0.4]"
+
+Questi numeri, inizialmente casuali, non significano ancora niente.
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{}
+
+- \textbf{Come funziona il gioco della previsione (training)}
+
+Word2vec utilizza principalmente due strategie: vediamo la più comune, chiamata \textbf{skip-gram}.
+
+Con la tecnica \textbf{skip-gram}, il modello segue questi passi:
+
+- \textbf{Prende una parola centrale dal testo} (ad esempio "gatto").
+
+Immagina la frase:
+
+- "il \textbf{gatto} mangia e poi miagola"
+
+La parola centrale scelta è \textbf{gatto}.
+
+- \textbf{Prova a indovinare le parole vicine} (contesto).
+
+In questa frase, intorno alla parola "gatto", ci sono parole vicine:  
+- "il"  
+- "mangia"  
+- "e"  
+
+Queste parole costituiscono il "contesto" di "gatto".
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+
+Il modello prende il vettore numerico (embedding) di \textbf{gatto} e cerca di predire (indovinare) gli embedding delle parole vicine.
+
+- \textbf{Calcola se ha indovinato o no (calcolo dell’errore)}.
+
+In pratica, il modello converte gli embeddings in probabilità che ciascuna parola appaia nel contesto:
+
+- se il modello dice correttamente che "mangia" o "miagola" sono vicine a "gatto", riceve un errore basso.
+
+- se sbaglia (ad esempio dice che "automobile" o "televisore" sono vicine a "gatto"), l'errore è alto.
+
+In questo passaggio, il modello utilizza una funzione matematica (solitamente una funzione chiamata "softmax" o versioni semplificate) per calcolare la probabilità di ogni parola di apparire vicino alla parola "gatto".
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{}
+
+ \textbf{Aggiornamento degli embeddings (apprendimento dagli errori)}
+
+Una volta che il modello calcola quanto ha sbagliato, usa questo errore per modificare leggermente i numeri associati a "gatto" e alle parole vicine, per migliorare la prossima previsione.
+
+- \textbf{Se ha predetto bene}: i numeri (embeddings) restano simili o subiscono modifiche piccolissime.
+
+- \textbf{Se ha predetto male}: gli embeddings vengono modificati significativamente, per avvicinare "gatto" alle parole corrette e allontanarlo dalle parole sbagliate.
+
+Ad esempio, se inizialmente "gatto" e "miagola" avevano numeri molto diversi tra loro, il modello, dopo aver notato che appaiono spesso insieme, modificherà i numeri per avvicinarli.
+
+\textbf{Così, lentamente, embeddings casuali iniziali evolvono in embeddings significativi}.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{}
+
+\textbf{Iterazione del processo}
+
+Questo processo viene ripetuto \textbf{milioni di volte}, passando attraverso un grande numero di parole e frasi diverse.
+
+Ogni volta:
+
+- il modello prende una nuova parola centrale.
+- prova a indovinare le parole vicine.
+- calcola l’errore.
+- modifica gli embeddings in base a quell’errore.
+
+Col passare del tempo, questo meccanismo produce embeddings numerici sempre più precisi e capaci di catturare il significato e la relazione tra parole.
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+
+\textbf{Cosa succede alla fine?}
+
+Alla fine dell'addestramento avrai una situazione tipo:
+
+- \textbf{gatto} → "[0.2, 0.5, 0.4]"
+- \textbf{miagola} → "[0.21, 0.51, 0.39]"
+- \textbf{cane} → "[0.22, 0.52, 0.41]"
+
+Noterai che "gatto", "miagola" e "cane" ora hanno numeri molto più simili tra loro, rispetto a parole diverse come "automobile" o "computer", che avranno numeri diversi.
+
+Questi valori finali ("embeddings addestrati") rappresentano dunque il significato delle parole e i loro rapporti reciproci, \textbf{pronti per essere utilizzati per altre applicazioni} (ad esempio confrontare il significato di due parole o trovare sinonimi).
+\end{frame}

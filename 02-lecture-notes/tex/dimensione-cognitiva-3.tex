@@ -1,0 +1,767 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+%
+%=====================================================================
+%
+% Tema e colori
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+%
+%=====================================================================
+%
+% Definizione colori personalizzati
+\definecolor{aiblue}{RGB}{30,144,255}
+\definecolor{mlgreen}{RGB}{46,139,87}
+\definecolor{datacolor}{RGB}{255,140,0}
+%
+%=====================================================================
+%
+\title{Dimensione Cognitiva \\ 3. Reti Neurali}
+\subtitle{Introduzione al Machine Learning}
+\setbeamercovered{transparent} 
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+\institute{A lezione di Intelligenza Artificiale} 
+\date{Siena - Giugno 2025} 
+%
+%=====================================================================
+%
+\begin{document}
+
+% Slide titolo
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Indice
+\begin{frame}{Indice}
+    \tableofcontents
+\end{frame}
+%
+%=====================================================================
+%
+\AtBeginSection[]
+{
+  %\begin{frame}<beamer>
+  %\footnotesize	
+  %\frametitle{Outline}
+  %\begin{multicols}{2}
+  %\tableofcontents[currentsection]
+  %\end{multicols}	  
+  %\normalsize
+  %\end{frame}
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	 	 	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+%__________________________________________________________________________
+%
+\section{I Limiti dei Confini Lineari}
+%
+%..................................................................
+%
+\begin{frame}{Dove Abbiamo Lasciato...}
+\begin{block}{Recap: La Visione Geometrica}
+\begin{itemize}
+\item Ogni dato = punto nello spazio multidimensionale
+\item Machine Learning = trovare confini ottimali
+\item Classificazione = separazione geometrica
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{La Formula Magica}
+$$\text{Decisione} = \text{sign}(w_1x_1 + w_2x_2 + \ldots + w_nx_n + b)$$
+\end{block}
+
+\pause
+\begin{alertblock}{Ma cosa succede quando...}
+...i dati non sono linearmente separabili?
+\end{alertblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un Problema che Non Riusciamo a Risolvere}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Scenario: Riconoscimento Volti}
+\begin{itemize}
+\item $x_1$: Luminosità media
+\item $x_2$: Contrasto dell'immagine
+\end{itemize}
+\vspace{.5cm}
+\textbf{Il Problema:}\\
+Non esiste una linea retta che separi ``volto'' da ``non volto''!
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\includegraphics[scale=.6]{../05-pictures/dimensione-cognitiva-3_pic_0.png} 
+\end{center}
+\end{column}
+\end{columns}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Un Problema che Non Riusciamo a Risolvere}
+
+\textbf{La soluzione:}\\
+Possiamo però trasformare i dati del problema!
+\begin{center}
+\includegraphics[scale=.6]{../05-pictures/dimensione-cognitiva-3_pic_1.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Un problema apparentemente semplice}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-3_pic_2.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Un problema apparentemente semplice}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-3_pic_3.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Perché i Problemi Reali Sono Difficili}
+\framesubtitle{Oltre i Confini Lineari}
+\small
+\begin{block}{Esempio: Distinguere Email Spam}
+\textbf{Regola semplice (lineare):} "Se contiene più di 5 numeri → Spam"
+\textcolor{red}{Problema:} Le email spam sono furbe!
+\begin{itemize}
+    \item Usano sinonimi: "Vincere" → "V1nc3r3"
+    \item Cambiano strategia continuamente
+    \item Imitano email legittime
+\end{itemize}
+\end{block}
+
+\begin{block}{Esempio: Riconoscere Funghi Velenosi}
+\textbf{Regola semplice:} "Se è rosso → Velenoso"
+\textcolor{red}{Problema:} La natura è complessa!
+\begin{itemize}
+    \item Funghi rossi commestibili esistono
+    \item Funghi bianchi possono essere mortali
+    \item Serve combinare: colore + forma + habitat + stagione
+\end{itemize}
+\end{block}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Il Neurone Artificiale: Oltre la Linearità}
+%
+%..................................................................
+%
+\begin{frame}{L'Idea Rivoluzionaria}
+
+\begin{block}{Ispirazione Biologica}
+Il cervello umano processa informazioni attraverso miliardi di neuroni interconnessi
+\end{block}
+
+\begin{block}{Neurone Artificiale = Modello Lineare + Funzione Non-Lineare}
+$$\text{output} = f\left(\sum_{i=1}^{n} w_i x_i + b\right)$$
+
+dove $f$ è una \textbf{funzione di attivazione non-lineare}
+\end{block}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{L'Idea Rivoluzionaria}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-3_pic_4.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{L'Idea Rivoluzionaria}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-3_pic_5.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{L'Idea Rivoluzionaria}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-3_pic_6.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{L'Idea Rivoluzionaria}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-3_pic_7.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{L'Idea Rivoluzionaria}
+\begin{center}
+\includegraphics[scale=.45]{../05-pictures/dimensione-cognitiva-3_pic_8.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{L'Idea Rivoluzionaria}
+\begin{center}
+\includegraphics[scale=.35]{../05-pictures/dimensione-cognitiva-3_pic_9.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Funzioni di Attivazione: Gli Interruttori Intelligenti}
+
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\textbf{Sigmoid:} $\sigma(z) = \frac{1}{1+e^{-z}}$
+\begin{itemize}
+\item Output tra 0 e 1
+\item ``Interruttore morbido''
+\item Interpretabile come probabilità
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{ReLU:} $f(z) = \max(0,z)$
+\begin{itemize}
+\item Semplice ed efficace
+\item ``Attiva o spegni''
+\item Molto usata oggi
+\end{itemize}
+\end{column}
+
+\begin{column}{0.45\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+% Sigmoid
+\draw[->] (-3,0) -- (3,0) node[right] {$z$};
+\draw[->] (0,-0.5) -- (0,2.5) node[above] {$\sigma(z)$};
+\draw[blue,thick,domain=-3:3,smooth] plot (\x,{2/(1+exp(-2*\x))});
+\node[blue] at (1.5,2.2) {Sigmoid};
+
+% Griglia per ReLU
+\begin{scope}[yshift=-3.5cm]
+\draw[->] (-3,0) -- (3,0) node[right] {$z$};
+\draw[->] (0,-0.5) -- (0,2.5) node[above] {ReLU};
+\draw[red,thick] (-3,0) -- (0,0);
+\draw[red,thick] (0,0) -- (2.5,2.5);
+\node[red] at (1.5,2.2) {ReLU};
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{column}
+\end{columns}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Il Neurone Come Decisore Intelligente}
+\framesubtitle{Un'Analogia Familiare}
+
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\textbf{Immaginate un Preside che Decide le Sospensioni:}
+
+\vspace{0.3cm}
+\textbf{Input (Informazioni):}
+\begin{itemize}
+    \item Gravità del comportamento
+    \item Storia precedente dello studente  
+    \item Circostanze attenuanti
+    \item Testimonianze di altri docenti
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Pesi (Importanza):}
+\begin{itemize}
+    \item Gravità: \textcolor{red}{peso alto}
+    \item Storia: \textcolor{blue}{peso medio}
+    \item Attenuanti: \textcolor{green}{peso basso}
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Decisione:} Sospensione SÌ/NO
+\end{column}
+
+\begin{column}{0.4\textwidth}
+\begin{center}
+\textbf{Formula del Preside:}
+
+\vspace{0.3cm}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+Decisione = f(\\
+\quad Gravità × 0.6 +\\
+\quad Storia × 0.3 +\\
+\quad Attenuanti × (-0.2)\\
+)
+}}
+
+\vspace{0.5cm}
+\textcolor{blue}{\textbf{Questo è un neurone artificiale!}}
+\end{center}
+\end{column}
+\end{columns}
+
+\end{frame}
+%
+%..................................................................
+%
+% Slide 4: Funzioni di Attivazione Spiegate Semplici
+\begin{frame}
+\frametitle{Le Funzioni di Attivazione}
+\framesubtitle{Gli "Interruttori Intelligenti"}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Sigmoid - "L'Acceleratore"}
+\begin{itemize}
+    \item Come l'acceleratore di un'auto
+    \item Più premi → più veloce vai
+    \item Ma c'è un limite massimo!
+    \item Output: da 0 a 1 (come percentuale)
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{ReLU - "L'Interruttore"}
+\begin{itemize}
+    \item Come un interruttore della luce
+    \item Se il segnale è debole → Spento (0)
+    \item Se il segnale è forte → Acceso (il valore stesso)
+    \item Semplice ma efficace!
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+\textbf{Analogia con l'Insegnamento:}
+
+\vspace{0.3cm}
+\fbox{\parbox{0.9\textwidth}{
+\textit{Sigmoid}: Come dare voti da 0 a 10 - transizione graduale
+
+\vspace{0.3cm}
+\textit{ReLU}: Come dare Sufficiente/Insufficiente - soglia netta
+}}
+
+\vspace{0.5cm}
+\textcolor{blue}{\textbf{Entrambi trasformano l'input in output utile!}}
+\end{center}
+\end{column}
+\end{columns}
+
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Apprendimento Supervisionato}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Come Impara una Rete Neurale?}
+\framesubtitle{L'Analogia del Docente Inesperto}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Immaginate un Docente alle Prime Armi:}
+
+\vspace{0.3cm}
+\textcolor{red}{\textbf{Situazione iniziale:}}
+\begin{itemize}
+    \item Non sa ancora valutare i compiti
+    \item Ha criteri confusi e imprecisi
+    \item Le sue valutazioni sono casuali
+    \item Studenti e colleghi sono insoddisfatti
+\end{itemize}
+
+\vspace{0.3cm}
+\textcolor{blue}{\textbf{Cosa serve per migliorare?}}
+\begin{itemize}
+    \item \textit{Supervisione} di un tutor esperto
+    \item \textit{Correzione} degli errori
+    \item \textit{Pratica} con molti esempi
+    \item \textit{Feedback} costante
+\end{itemize}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+\textbf{Una Rete Neurale è Identica!}
+
+\vspace{0.3cm}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textcolor{red}{\textbf{Inizialmente:}}\\
+I pesi sono casuali\\
+Le previsioni sono sbagliate\\
+
+\vspace{0.3cm}
+\textcolor{green}{\textbf{Con l'addestramento:}}\\
+I pesi si aggiustano\\
+Le previsioni migliorano\\
+}}
+
+\vspace{0.5cm}
+\textcolor{blue}{\textbf{Chiave del successo:}} 
+\textit{Apprendimento Supervisionato}
+\end{center}
+\end{column}
+\end{columns}
+
+\end{frame}
+\begin{frame}
+\frametitle{I Dati di Addestramento: I "Libri di Testo" della Rete}
+\framesubtitle{Esempi con Risposte Corrette}
+
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\textbf{Cosa Servono alla Rete per Imparare:}
+
+\vspace{0.3cm}
+\textcolor{blue}{\textbf{Dataset di Training:}}
+\begin{itemize}
+    \item Migliaia (o milioni) di esempi
+    \item Ogni esempio ha \textit{input} + \textit{output corretto}
+    \item Qualità $>$ Quantità (ma servono entrambe!)
+    \item Diversità negli esempi
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Analogia Scolastica:}
+\begin{itemize}
+    \item \textit{Input}: Testo di un problema di matematica
+    \item \textit{Output corretto}: Soluzione step-by-step
+    \item \textit{Addestramento}: Mostrare 1000 problemi risolti
+    \item \textit{Test}: Dare un problema nuovo
+\end{itemize}
+\end{column}
+
+\begin{column}{0.4\textwidth}
+\begin{center}
+\textbf{Esempio: Riconoscimento Email Spam}
+
+\vspace{0.3cm}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Email} & \textbf{Etichetta} \\
+\hline
+"Vinci 1000€!" & SPAM \\
+\hline
+"Riunione domani" & LEGITTIMA \\
+\hline
+"CLICCA QUI!!!" & SPAM \\
+\hline
+"Buon compleanno" & LEGITTIMA \\
+\hline
+\end{tabular}
+
+\vspace{0.5cm}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textbf{La rete impara dai pattern:}\\
+Molte maiuscole + punti esclamativi → SPAM
+}}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{La "Matematica del Miglioramento"}
+\framesubtitle{Come Funziona la Correzione dei Pesi}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Analogia: Aggiustare la Mira}
+
+\vspace{0.3cm}
+\textcolor{blue}{\textbf{Quando tirate una freccia:}}
+\begin{itemize}
+    \item Mirate al centro del bersaglio
+    \item Vedete dove colpite
+    \item Aggiustate la mira per la prossima freccia
+    \item \textit{Se troppo a sinistra} → Mirate più a destra
+    \item \textit{Se troppo in alto} → Mirate più in basso
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\textbf{Nella Rete Neurale:}
+
+\vspace{0.3cm}
+\textcolor{green}{\textbf{Formula Semplificata:}}
+\begin{center}
+Nuovo Peso = Vecchio Peso + Correzione
+\end{center}
+
+\vspace{0.3cm}
+\textcolor{red}{\textbf{La Correzione dipende da:}}
+\begin{itemize}
+    \item \textit{Quanto} è grande l'errore
+    \item \textit{Quanto} ha contribuito quel peso all'errore
+    \item \textit{Velocità} di apprendimento (learning rate)
+\end{itemize}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{La "Matematica del Miglioramento"}
+\framesubtitle{Come Funziona la Correzione dei Pesi}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\vspace{0.3cm}
+\textbf{La Regola d'Oro:}
+\begin{center}
+\fbox{\parbox{0.9\textwidth}{
+\centering
+\textit{Correzione proporzionale all'errore}\\
+\vspace{0.2cm}
+Errore grande → Correzione grande\\
+Errore piccolo → Correzione piccola
+}}
+\end{center}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\textbf{Esempio Numerico:}
+\begin{itemize}
+    \item Peso attuale: 0.3
+    \item Errore: La rete ha sbagliato molto
+    \item Questo peso ha causato l'errore
+    \item Correzione: -0.1
+    \item Nuovo peso: 0.3 - 0.1 = 0.2
+\end{itemize}
+\end{column}
+\end{columns}
+
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Rappresentazioni Interne}
+%
+%..................................................................
+%
+\begin{frame}{Il Concetto di Rappresentazione}
+
+\begin{block}{Definizione}
+Una \textbf{rappresentazione} è il modo in cui i dati vengono codificati internamente dall'algoritmo per facilitare il compito da svolgere.
+\end{block}
+\vspace{0.5cm}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Rappresentazione Originale}
+\begin{itemize}
+\item Pixel dell'immagine
+\item Parole del testo  
+\item Note musicali
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Rappresentazione Appresa}
+\begin{itemize}
+\item Bordi e forme
+\item Concetti semantici
+\item Armonie e ritmi
+\end{itemize}
+\end{column}
+\end{columns}
+
+\pause
+\vspace{.3cm}
+\begin{alertblock}{Intuizione Chiave}
+Le reti neurali imparano a \textbf{trasformare} i dati in rappresentazioni più utili per il problema!
+\end{alertblock}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Esempio: Dall'Immagine al Concetto}
+\begin{center}
+\includegraphics[scale=.5]{../05-pictures/dimensione-cognitiva-3_pic_10.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Esempio: Dall'Immagine al Concetto}
+\begin{center}
+\includegraphics[scale=.5]{../05-pictures/dimensione-cognitiva-3_pic_11.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Esempio: Dall'Immagine al Concetto}
+\begin{center}
+\includegraphics[scale=.35]{../05-pictures/dimensione-cognitiva-3_pic_12.png} 
+\end{center}
+
+\begin{block}{Trasformazione Progressiva}
+\begin{enumerate}
+\item \textbf{Layer 1}: Rileva bordi e texture dai pixel
+\item \textbf{Layer 2}: Combina bordi in forme geometriche
+\item \textbf{Output}: Riconosce oggetti dalle forme
+\end{enumerate}
+\end{block}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{La Magia delle Rappresentazioni Intermedie}
+
+\begin{block}{Esempio: Riconoscimento di Volti}
+\textbf{Cosa impara ogni livello:}
+\begin{itemize}
+\item \textbf{Layer 1}: Bordi, linee, contrasti
+\item \textbf{Layer 2}: Naso, occhi, bocca (parti del volto)
+\item \textbf{Layer 3}: Configurazioni facciali
+\item \textbf{Output}: ``È un volto'' o ``Non è un volto''
+\end{itemize}
+\end{block}
+
+\pause
+
+\begin{block}{Perché È Rivoluzionario?}
+\begin{itemize}
+\item La rete \textbf{scopre automaticamente} le caratteristiche rilevanti
+\item Non dobbiamo più programmare manualmente ``cosa cercare''
+\item Ogni layer costruisce su quello precedente
+\item Rappresentazioni sempre più \textbf{astratte} e \textbf{significative}
+\end{itemize}
+\end{block}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Visualizzare le Rappresentazioni: Un Esperimento Mentale}
+
+\begin{block}{Scenario: Classificazione di Animali}
+Dati originali: 1000 immagini di cani e gatti (28x28 pixel = 784 dimensioni)
+\end{block}
+\vspace{1cm}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Spazio Originale (784D)}
+\begin{itemize}
+\item Ogni pixel = una dimensione
+\item Dati molto ``sparsi''
+\item Difficile trovare pattern
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Rappresentazione Interna (3D)}
+\begin{itemize}
+\item La rete ``comprime'' in 3D
+\item Cani e gatti si separano!
+\item Pattern evidenti
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Visualizzare le Rappresentazioni: Un Esperimento Mentale}
+
+\begin{block}{Scenario: Classificazione di Animali}
+Dati originali: 1000 immagini di cani e gatti (28x28 pixel = 784 dimensioni)
+\end{block}
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+% 3D representation
+\draw[->] (0,0) -- (3,0) node[right] {Dimensione 1};
+\draw[->] (0,0) -- (0,3) node[above] {Dimensione 2};
+\draw[->] (0,0) -- (-1.5,-1.5) node[below left] {Dimensione 3};
+
+% Cani (blu)
+\fill[blue] (0.5,0.5) circle (2pt);
+\fill[blue] (0.8,0.8) circle (2pt);
+\fill[blue] (0.3,0.7) circle (2pt);
+\fill[blue] (0.6,0.4) circle (2pt);
+
+% Gatti (rosso)  
+\fill[red] (2.5,2.5) circle (2pt);
+\fill[red] (2.2,2.8) circle (2pt);
+\fill[red] (2.7,2.2) circle (2pt);
+\fill[red] (2.4,2.6) circle (2pt);
+
+\node[blue] at (0.5,0.2) {\small Cani};
+\node[red] at (2.5,2.1) {\small Gatti};
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Rappresentazioni per Diversi Domini}
+
+\begin{block}{Immagini: Convolutional Neural Networks (CNN)}
+\begin{itemize}
+\item \textbf{Rappresentazione}: Da pixel a feature maps
+\item \textbf{Trasformazioni}: Convoluzione, pooling
+\item \textbf{Risultato}: Gerarchia di pattern visivi
+\end{itemize}
+\end{block}
+
+\begin{block}{Testo: Transformer e Word Embeddings}
+\begin{itemize}
+\item \textbf{Rappresentazione}: Da parole a vettori numerici  
+\item \textbf{Trasformazioni}: Attention mechanisms
+\item \textbf{Risultato}: Significato semantico e relazioni
+\end{itemize}
+\end{block}
+\end{frame}
+%
+%=====================================================================
+%
+\end{document}

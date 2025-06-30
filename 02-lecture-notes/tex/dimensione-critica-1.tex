@@ -1,0 +1,468 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usetheme{Madrid}
+%
+%=====================================================================
+%
+\title{Dimensione Critica \\ Limiti e Potenzialità dell'Intelligenza Artificiale}
+\subtitle{Dati, Spiegabilità e Uso Consapevole dell'AI}
+\setbeamercovered{transparent} 
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+\institute{A lezione di Intelligenza Artificiale} 
+\date{Siena - Giugno 2025} 
+%
+%=====================================================================
+%
+\begin{document}
+
+% Slide titolo
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Indice
+\begin{frame}{Indice}
+    \tableofcontents
+\end{frame}
+%
+%=====================================================================
+%
+\AtBeginSection[]
+{
+  %\begin{frame}<beamer>
+  %\footnotesize	
+  %\frametitle{Outline}
+  %\begin{multicols}{2}
+  %\tableofcontents[currentsection]
+  %\end{multicols}	  
+  %\normalsize
+  %\end{frame}
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	 	 	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+%__________________________________________________________________________
+%
+\section{L'Importanza dei Dati}
+%
+%..................................................................
+%
+\begin{frame}{Data and Information Literacy nell’era dell’IA}
+\small
+Una delle principali conseguenze della digitalizzazione è la \textbf{proliferazione incontrollabile dei dati} (Borgman, 2016).\\[0.2cm]
+
+Il processo di infrastrutturazione digitale delle attività informative, cognitive, educative e comunicative sta producendo un fenomeno senza precedenti:
+
+\begin{block}{}
+\textbf{«La generazione di enormi quantità di dati generati dall’azione umana all’interno delle piattaforme»} (Van Dijck, 2014).
+\end{block}
+
+\vspace{0.3cm}
+Due concetti chiave:
+\begin{itemize}
+    \item \textbf{Piattaformizzazione}: penetrazione delle piattaforme in infrastrutture, processi economici e culturali (Poell, Nieborg, Van Dijck, 2019).
+    \item \textbf{Datafication}: trasformazione di pratiche storicamente non quantificabili in dati (Van Dijck, 2014).
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{La raccolta dei dati e l'importanza della consapevolezza}
+\small
+Il processo di datafication include non solo dati volontari (profilazione), ma anche:
+\begin{itemize}
+    \item \textbf{Metadati comportamentali}: raccolti tramite app, plug-in, sensori, tracker, dispositivi mobili.
+    \item Questi dati trasformano \textbf{ogni interazione umana} in un flusso informativo digitale.
+    \item \textbf{Diffusione incontrollata}: i dati vengono spesso condivisi con attori esterni in modo imprevedibile.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{"I dati sono il nuovo petrolio"} (*The Economist*, 2017)
+
+\vspace{0.3cm}
+\textbf{Riflessione critica}:
+\begin{itemize}
+    \item I recenti sviluppi dell’IA sono stati resi possibili da questa disponibilità massiva di dati.
+    \item È \textbf{cruciale riflettere sul concetto di dato} per comprendere il funzionamento dei sistemi di IA e le implicazioni sociali.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{La raccolta dei dati e l'importanza della consapevolezza}
+
+\textbf{Come la condivisione di dati inconsapevole può creare problemi di sicurezza nazionale ad una superpotenza}\\
+\vspace{1cm}
+Nel 2018, l'app di fitness Strava ha pubblicato una "heatmap" globale che mostrava le attività aggregate degli utenti, come corse e pedalate, tracciate tramite GPS. Sebbene l'intento fosse quello di fornire una visualizzazione delle rotte più popolari, è emerso che in aree isolate, come zone di conflitto o deserti, le tracce lasciate da militari in servizio erano chiaramente visibili. Questo ha permesso di identificare la posizione di basi militari segrete, rivelando anche i percorsi abituali dei soldati durante l'allenamento .
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{La raccolta dei dati e l'importanza della consapevolezza}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-critica-1_pic_0.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Ripensare il concetto di dato}
+\small
+\textbf{Non possiamo ignorare i problemi legati all’acquisizione e all’uso dei dati personali.}
+
+\vspace{0.3cm}
+Secondo Borgman (2016), i dati:
+\begin{itemize}
+    \item non sono oggetti naturali;
+    \item sono \textbf{rappresentazioni} di osservazioni, oggetti, entità;
+    \item variano nel tempo, nel contesto e secondo l’osservatore.
+\end{itemize}
+
+\vspace{0.3cm}
+\begin{block}{}
+\textbf{«I dati esistono in un contesto, che ne influenza il significato insieme alla prospettiva dell’osservatore.»}
+\end{block}
+
+\vspace{0.3cm}
+\textbf{Il dato non è neutro} → può contenere stereotipi e pregiudizi.
+
+\vspace{0.3cm}
+\textbf{Conclusione}: è necessario promuovere una \textbf{critical data literacy education} per affrontare le sfide della \textit{data society}.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Data literacy e cittadinanza digitale}
+\small
+Si è passati da una visione tecnico-statistica a una concezione della \textbf{data literacy} come prerequisito per la \textbf{partecipazione proattiva alla società digitale} (Carmi et al., 2020).
+
+\vspace{0.2cm}
+\textbf{Tre livelli di data citizenship}:
+\begin{enumerate}
+    \item \textbf{Data thinking}: lettura, raccolta e comprensione critica dei dati;
+    \item \textbf{Data doing}: azioni concrete come la cancellazione e l’uso etico dei dati;
+    \item \textbf{Data participation}: attivismo civico e promozione della cultura dei dati.
+\end{enumerate}
+
+\vspace{0.2cm}
+\textbf{Bhargava \& D’Ignazio (2015)}:
+\begin{itemize}
+    \item Competenza tecnico-matematica e critica;
+    \item Capacità di leggere, creare e interpretare dati;
+    \item Comprensione della realtà rappresentata nei dati;
+    \item Narrazione pubblica basata sui dati.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Critical data literacy: definizione operativa}
+\small
+\textbf{Selwyn \& Pangrazio (2018)} definiscono la \textit{critical data literacy} come la capacità critica di gestione dei dati personali. Essa include:
+
+\vspace{0.2cm}
+\begin{itemize}
+    \item \textbf{Identificazione dei dati}: comprendere il tipo di dato (ceduto volontariamente o estratto automaticamente);
+    \item \textbf{Comprensione dei dati}: sapere come vengono trattati e processati;
+    \item \textbf{Riflessività sui dati}: analizzare le implicazioni legate al riuso;
+    \item \textbf{Uso critico dei dati}: leggere Termini di servizio, configurare la privacy, ecc.;
+    \item \textbf{Uso tattico dei dati}: impiego strategico nella prospettiva dell’attivismo civico.
+\end{itemize}
+
+\vspace{0.2cm}
+Questa forma di alfabetizzazione è essenziale per affrontare i rischi dell'IA e della data society.
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Bias e Altri Rischi}
+%
+%..................................................................
+%
+\begin{frame}{Bias e rischi cognitivi nei sistemi di IA}
+\small
+\textbf{Bias di conferma} → pregiudizio cognitivo per cui le persone tendono a interpretare nuove informazioni secondo convinzioni preesistenti.
+
+\vspace{0.3cm}
+\textbf{Implicazioni per l’IA}:
+\begin{itemize}
+    \item I sistemi di IA possono rafforzare bias già presenti nei dati;
+    \item Il rischio è che le decisioni automatizzate riflettano pregiudizi umani;
+    \item Particolarmente critico in contesti ad alto impatto sociale:
+    \begin{itemize}
+        \item Giustizia penale
+        \item Assistenza sanitaria
+        \item Finanza, alloggi, occupazione
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.2cm}
+È necessaria una \textbf{consapevolezza critica} per contrastare questi effetti sistemici.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Conseguenze critiche dell'IA generativa}
+\small
+\textbf{Possibili rischi e implicazioni emerse dall’uso dell’IA generativa:}
+
+\vspace{0.3cm}
+\begin{itemize}
+    \item \textbf{Conseguenze non intenzionali}: risultati imprevisti che richiedono il coinvolgimento di più attori per una valutazione attenta;
+    
+    \item \textbf{Atrofia mentale}: perdita di efficacia delle capacità cognitive dovuta alla delega del pensiero ai sistemi automatizzati;
+
+    \item \textbf{Allucinazioni}: output insensati o fuorvianti generati dal modello; portano a informazioni errate o dannose;
+
+    \item \textbf{Protezione della proprietà intellettuale}: il contenuto generato dall’IA solleva dubbi su copyright, uso non autorizzato e divulgazione accidentale di dati sensibili;
+
+    \item \textbf{Erosione della fiducia}: rischio di manipolazione sociale, diffusione di notizie false e indebolimento dell'autorevolezza delle fonti.
+\end{itemize}
+
+\vspace{0.2cm}
+Tutti questi elementi sottolineano la necessità di una \textbf{information literacy} critica e partecipata.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Conseguenze critiche dell'IA generativa}
+
+\vspace{0.3cm}
+\begin{itemize}
+    \item Superare il \textbf{bias di conferma} → ricerca strategica, non conferma automatica;
+    \item Contrastare l’\textbf{atrofia mentale} → esercizio del pensiero critico e flessibilità cognitiva;
+    \item Ridurre le \textbf{allucinazioni} → confronto attivo con fonti e comunità;
+    \item Promuovere \textbf{competenze critiche} → riflessione, confronto, valutazione.
+\end{itemize}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Opacità algoritmica e responsabilità decisionale}
+\small
+\textbf{Un modello è buono quanto lo sono i dati con cui è addestrato.}
+
+\vspace{0.3cm}
+Con l’aumento della complessità dei modelli di IA:
+\begin{itemize}
+    \item Diminuisce la trasparenza nel processo decisionale;
+    \item È sempre più difficile comprendere il \textbf{come} e il \textbf{perché} di una decisione;
+    \item Diventa arduo garantire \textbf{responsabilità decisionale} e possibilità di \textbf{interventi correttivi} (O’Neil, 2016).
+\end{itemize}
+
+\vspace{0.3cm}
+Ciò richiede:
+\begin{itemize}
+    \item una \textbf{postura critica} verso l’interpretabilità dei modelli;
+    \item riflessioni etiche su potere, controllo e governance dell’IA;
+    \item alfabetizzazione algoritmica come forma di cittadinanza.
+\end{itemize}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{XAI: eXplicable Artificial Intelligence}
+%
+%..................................................................
+%
+\begin{frame}{Explainability e responsabilità clinica}
+\small
+\textbf{Le applicazioni di IA come "black box"}:
+\begin{itemize}
+    \item Producono risultati accurati, ma spesso non interpretabili;
+    \item Critiche in contesti ad alto impatto umano: medicina, diritto, educazione.
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{L’explainability} (Ribeiro et al., 2016):
+\begin{itemize}
+    \item Capacità di comprendere e spiegare il processo decisionale di un modello;
+    \item Essenziale per evitare errori diagnostici, discriminazioni, stress e danni sistemici;
+    \item Anche un modello preciso può essere rischioso se non comprensibile dagli utenti (es. medici).
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Conclusione}: la spiegabilità è \textit{non solo desiderabile, ma essenziale} per un uso etico e responsabile dell’IA.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Trade-off tra precisione e spiegabilità}
+\small
+\textbf{Una delle sfide principali dell’explainability} è bilanciare:
+\begin{itemize}
+    \item \textbf{Precisione}: maggiore nei modelli complessi, ma meno interpretabili;
+    \item \textbf{Spiegabilità}: più alta nei modelli semplici, ma con minor accuratezza.
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Il contesto è fondamentale}:
+\begin{itemize}
+    \item In medicina o diritto → meglio modelli spiegabili;
+    \item In meteorologia o altri ambiti → può prevalere la precisione;
+    \item Diversi utenti (ingegneri, medici, cittadini) hanno \textbf{diverse esigenze esplicative}.
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Conclusione}:
+\begin{itemize}
+    \item Non esiste una "taglia unica" per l’explainability;
+    \item Deve essere adattata all’utente;
+    \item Aiuta a comprendere decisioni, prevenire errori e scoprire bias.
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Modelli spiegabili e trasparenza decisionale}
+\small
+\textbf{Trustworthy AI e linee guida europee} (AI HLEG, 2019):
+\begin{itemize}
+    \item Richiedono tracciabilità delle decisioni automatizzate;
+    \item È essenziale documentare: dati, etichettatura, algoritmo e logica decisionale.
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Explainability e metodi di trasparenza}:
+\begin{itemize}
+    \item \textbf{Metodi intrinseci}:
+    \begin{itemize}
+        \item Alberi decisionali, regressione lineare/logistica, modelli GLM;
+        \item Interpretabili “nativamente”, la relazione input/output è chiara.
+    \end{itemize}
+    \item \textbf{Metodi post hoc}:
+    \begin{itemize}
+        \item Spiegazioni applicate dopo l’elaborazione (es. LIME, SHAP).
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Conclusione}: un modello intrinsecamente spiegabile è una base solida per un’IA trasparente e responsabile.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Spiegabilità post hoc: LIME e SHAP}
+\small
+\textbf{I metodi post hoc} sono utilizzati per spiegare modelli complessi dopo l’addestramento.
+
+\vspace{0.3cm}
+\textbf{Due tecniche principali}:
+\begin{itemize}
+    \item \textbf{LIME} (\textit{Local Interpretable Model-agnostic Explanations})  
+    Fornisce spiegazioni locali, indicando l’impatto di ciascuna feature sulla decisione;
+    
+    \item \textbf{SHAP} (\textit{SHapley Additive exPlanations})  
+    Usa la teoria dei giochi per valutare l’importanza di ogni variabile in modo consistente e globale (Lundberg \& Lee, 2017).
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Obiettivo}: anche modelli opachi (es. reti neurali) diventano parzialmente interpretabili grazie a queste tecniche.
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Inquiry Based Learning e Uso Critico dell'AI}
+%
+%..................................................................
+%
+\begin{frame}{ChatGPT e il pensiero critico: l’Inquiry Based Learning}
+\small
+\textbf{IA generativa e accesso all’informazione}:
+\begin{itemize}
+    \item LLM come ChatGPT offrono nuove opportunità educative;
+    \item Ma pongono sfide alla formazione del \textbf{pensiero critico}.
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Rischi evidenziati}:
+\begin{itemize}
+    \item Dipendenza da risposte automatizzate;
+    \item Diminuzione della capacità di analizzare, valutare, contestualizzare;
+    \item Rischi educativi: copia-incolla, assenza di rielaborazione, plagio intellettuale (Ranieri, 2022).
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Soluzione proposta}: usare \textbf{ChatGPT come palestra} per sviluppare pensiero critico, secondo l’approccio \textbf{Inquiry Based Learning (IBL)}.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il potere delle domande: Prompt design educativo}
+\small
+\textbf{Non è l’output a fare la differenza, ma l’interazione}:
+\begin{itemize}
+    \item Esiste un “modo e modo” di porre domande a ChatGPT;
+    \item Un prompt generico produce risposte generiche;
+    \item Un prompt ben costruito stimola analisi, verifica, confronto.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Esempio educativo}:
+\begin{itemize}
+    \item Chiedere una valutazione delle fonti;
+    \item Richiedere il punteggio di affidabilità con motivazioni;
+    \item Simulare un dialogo argomentativo.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Conclusione}: ChatGPT può diventare una \textbf{palestra per la formulazione di domande}, allenando lo \textbf{spirito critico} e la capacità di riflessione.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Inquiry Based Learning: la struttura in 5 fasi}
+\small
+\textbf{L’IBL (Inquiry Based Learning)} è un approccio didattico che:
+\begin{itemize}
+    \item Collega esplorazione e metacognizione;
+    \item Si basa sulla scoperta guidata, l’ipotesi, la verifica;
+    \item È adatto per integrare ChatGPT in una didattica attiva e critica.
+\end{itemize}
+
+\vspace{0.3cm}
+\textbf{Inquiry Cycle} (Pedaste et al., 2015):
+\begin{enumerate}
+    \item \textbf{Orientamento}: introduzione al problema;
+    \item \textbf{Concettualizzazione}: generazione di domande e ipotesi;
+    \item \textbf{Scoperta}: esplorazione e analisi;
+    \item \textbf{Conclusione}: sintesi e soluzione proposta;
+    \item \textbf{Discussione}: valutazione e confronto finale.
+\end{enumerate}
+
+\vspace{0.2cm}
+\textbf{Prima fase operativa}: \textit{Familiarizzare con ChatGPT}.
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{IBL con ChatGPT: le prime tre fasi operative}
+\small
+\textbf{Fase 1 – Familiarizzazione}:
+\begin{itemize}
+    \item Studenti in coppie interagiscono con ChatGPT;
+    \item Provano prompt, valutano le risposte, migliorano l’interazione.
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Fase 2 – Generare un testo}:
+\begin{itemize}
+    \item Suddivisione in gruppi;
+    \item Ogni gruppo elabora un prompt per risolvere un problema;
+    \item Si genera un testo con ChatGPT e si confrontano gli output.
+\end{itemize}
+
+\vspace{0.2cm}
+\textbf{Fase 3 – Mettere alla prova ChatGPT}:
+\begin{itemize}
+    \item Discussione plenaria;
+    \item Analisi di qualità, affidabilità e coerenza;
+    \item Riflessione su prompt e ruolo dell’utente.
+\end{itemize}
+\end{frame}
+
+\end{document}

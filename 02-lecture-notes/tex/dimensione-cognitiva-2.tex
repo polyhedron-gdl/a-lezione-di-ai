@@ -1,0 +1,1040 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+%
+%=====================================================================
+%
+% Tema e colori
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+%
+%=====================================================================
+%
+% Definizione colori personalizzati
+\definecolor{aiblue}{RGB}{30,144,255}
+\definecolor{mlgreen}{RGB}{46,139,87}
+\definecolor{datacolor}{RGB}{255,140,0}
+%
+%=====================================================================
+%
+\title{Dimensione Cognitiva \\ 2. Macchine che Imparano}
+\subtitle{Introduzione al Machine Learning}
+\setbeamercovered{transparent} 
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+\institute{A lezione di Intelligenza Artificiale} 
+\date{Siena - Giugno 2025} 
+%
+%=====================================================================
+%
+\begin{document}
+
+% Slide titolo
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Indice
+\begin{frame}{Indice}
+    \tableofcontents
+\end{frame}
+%
+%=====================================================================
+%
+\AtBeginSection[]
+{
+  %\begin{frame}<beamer>
+  %\footnotesize	
+  %\frametitle{Outline}
+  %\begin{multicols}{2}
+  %\tableofcontents[currentsection]
+  %\end{multicols}	  
+  %\normalsize
+  %\end{frame}
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	 	 	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+%__________________________________________________________________________
+%
+\section{Algoritmi Tradizionali vs Machine Learning}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Algoritmo Tradizionale: Dalle Regole al Codice}
+\begin{block}{Definizione}
+Un algoritmo tradizionale è una sequenza di istruzioni precise e predefinite che il computer esegue passo dopo passo per risolvere un problema specifico.
+\end{block}
+
+\textbf{Caratteristiche:}
+\begin{itemize}
+\item Le regole sono scritte esplicitamente dal programmatore
+\item Il comportamento è completamente spiegabile e prevedibile
+\item Infatti la logica è trasparente e verificabile
+\end{itemize}
+
+\textbf{Esempio concreto - Calcolo dello sconto:}
+\begin{itemize}
+\item SE il cliente spende più di 100€ ALLORA applica sconto 10\%
+\item ALTRIMENTI nessuno sconto
+\item Il programmatore ha definito esattamente quando e come applicare lo sconto
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Algoritmo Tradizionale: Dalle Regole al Codice}
+\begin{center}
+\includegraphics[scale=.7]{../05-pictures/dimensione-cognitiva-2_pic_0.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Algoritmo Tradizionale: Dalle Regole al Codice}
+\begin{center}
+\includegraphics[scale=.6]{../05-pictures/dimensione-cognitiva-2_pic_1.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Un gioco più complicato ...}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-2_pic_2.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Machine Learning: Apprendimento dai Dati}
+\begin{block}{Definizione}
+Il Machine Learning è un approccio in cui l'algoritmo scopre automaticamente le regole analizzando grandi quantità di dati, senza che queste regole vengano programmate esplicitamente.
+\end{block}
+
+\textbf{Caratteristiche:}
+\begin{itemize}
+\item Le regole emergono dall'analisi dei dati
+\item Il comportamento può variare in base ai dati di addestramento
+\item L'algoritmo può gestire situazioni non previste dal programmatore
+\item La logica interna è spesso complessa e non direttamente interpretabile
+\end{itemize}
+
+\textbf{Esempio concreto - Rilevamento frodi:}
+\begin{itemize}
+\item L'algoritmo analizza milioni di transazioni passate
+\item Identifica automaticamente pattern sospetti
+\item Impara a distinguere transazioni normali da quelle fraudolente
+\item Non esistono regole esplicite scritte dal programmatore
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Confronto Diretto: Riconoscimento di Spam}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\textbf{\color{red}Approccio Tradizionale}
+\begin{itemize}
+\item Il programmatore scrive regole:
+\begin{itemize}
+\item Se contiene "GRATIS" → spam
+\item Se ha più di 5 punti esclamativi → spam
+\item Se mittente sconosciuto → spam
+\end{itemize}
+\item Ogni regola è esplicita
+\item Facile da capire ma limitato
+\item Non si adatta a nuovi tipi di spam
+\end{itemize}
+\end{column}
+\begin{column}{0.48\textwidth}
+\textbf{\color{aiblue}Machine Learning}
+\begin{itemize}
+\item L'algoritmo analizza:
+\begin{itemize}
+\item 100.000 email spam
+\item 100.000 email legittime
+\end{itemize}
+\item Scopre automaticamente pattern:
+\begin{itemize}
+\item Frequenza di certe parole
+\item Struttura del testo
+\item Caratteristiche del mittente
+\end{itemize}
+\item Si adatta a nuovi tipi di spam
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Tutto comincia con una Retta...}
+%
+%..................................................................
+%
+\begin{frame}
+    \centering
+    \includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{../05-pictures/dimensione-cognitiva-2_pic_3.png}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il Problema: Valutare un Appartamento}
+\begin{block}{Esempio pratico}
+Come può un computer determinare il prezzo di un appartamento?
+\begin{itemize}
+    \item Analizzando migliaia di vendite passate
+    \item Identificando le caratteristiche che influenzano il prezzo
+    \item Creando un modello predittivo
+\end{itemize}
+\end{block}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il Problema: Valutare un Appartamento}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Caratteristiche dell'appartamento:}
+\begin{itemize}
+    \item Superficie (m²)
+    \item Numero di stanze
+    \item Piano
+    \item Zona della città
+    \item Età dell'edificio
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Domanda:}
+\begin{center}
+\Large
+Quanto vale questo appartamento?
+\end{center}
+
+\vspace{0.5cm}
+
+\textbf{Approccio tradizionale:}
+\begin{itemize}
+    \item Perizia manuale
+    \item Confronto con vendite simili
+    \item Esperienza dell'agente
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}%
+%..................................................................
+%
+\begin{frame}{Soluzione: Regressione Lineare}
+\textbf{Idea base:} Trovare una relazione matematica tra caratteristiche e prezzo
+
+\vspace{0.5cm}
+
+\begin{block}{Modello Semplificato (una variabile)}
+$$\text{Prezzo} = a \times \text{Superficie} + b$$
+\end{block}
+
+\vspace{0.5cm}
+
+\begin{block}{Modello Completo (più variabili)}
+$$\text{Prezzo} = a_1 \times \text{Superficie} + a_2 \times \text{Stanze} + a_3 \times \text{Piano} + b$$
+\end{block}
+
+\vspace{0.5cm}
+
+\textbf{L'algoritmo impara:}
+\begin{itemize}
+    \item I \textbf{coefficienti} $a_1, a_2, a_3, \ldots$ (quanto influisce ogni caratteristica)
+    \item L'\textbf{intercetta} $b$ (prezzo base)
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Come Funziona l'Apprendimento?}
+\begin{enumerate}
+    \item \textbf{Training}: Raccogliamo dati di appartamenti già venduti
+    \begin{itemize}
+        \item Es: 90m², 3 stanze, 2° piano → venduto a €180.000
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \item \textbf{Algoritmo}: Trova la retta che meglio approssima i dati
+    \begin{itemize}
+        \item Minimizza l'errore tra prezzi reali e predetti
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \item \textbf{Predizione}: Utilizziamo il modello per nuovi appartamenti
+    \begin{itemize}
+        \item Es: 75m², 2 stanze, 1° piano → prezzo stimato?
+    \end{itemize}
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\begin{alertblock}{Esempio Numerico}
+Se il modello impara: Prezzo = 2000 × Superficie + 15000 × Stanze + 5000\\
+Per 75m², 2 stanze: Prezzo = 2000×75 + 15000×2 + 5000 = \textbf{€185.000}
+\end{alertblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Gli Ingredienti Fondamentali del Machine Learning}
+\begin{block}{Un esempio semplice, ma completo!}
+Sebbene l'esempio della regressione lineare sia molto semplice, esso contiene \textbf{tutti} gli ingredienti fondamentali del Machine Learning:
+\end{block}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-2_pic_4.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Gli Ingredienti Fondamentali del Machine Learning}
+\textbf{Data-Driven (Guidato dai Dati)}
+\begin{itemize}
+    \item Le decisioni non sono programmate manualmente
+    \item Il modello impara direttamente dai dati storici di vendita
+\end{itemize}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-2_pic_4.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Gli Ingredienti Fondamentali del Machine Learning}
+\textbf{Funzione di Errore}
+\begin{itemize}
+    \item Misuriamo quanto le nostre predizioni si discostano dalla realtà
+    \item Es: Errore Quadratico Medio (MSE)
+\end{itemize}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-2_pic_4.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Gli Ingredienti Fondamentali del Machine Learning}
+\textbf{Metodo di Ottimizzazione}
+\begin{itemize}
+    \item Algoritmo che cerca i parametri che minimizzano l'errore
+    \item Es: Gradient Descent, Least Squares
+\end{itemize}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-2_pic_4.png} 
+\end{center}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Il Processo di Addestramento}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Addestramento: Definizione Tecnica}
+\begin{block}{Che cos'è l'addestramento}
+L'addestramento è il processo computazionale attraverso cui un algoritmo di machine learning analizza un dataset per identificare pattern statistici e costruire un modello matematico capace di fare predizioni su dati nuovi.
+\end{block}
+
+\textbf{Componenti essenziali:}
+\begin{enumerate}
+\item \textbf{Dataset di addestramento:} Insieme di esempi con input e output desiderati
+\item \textbf{Algoritmo di apprendimento:} Procedura matematica che trova i pattern
+\item \textbf{Funzione di costo:} Misura quanto l'algoritmo sbaglia
+\item \textbf{Ottimizzazione:} Processo per ridurre gli errori
+\end{enumerate}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Fasi del Processo di Addestramento}
+\textbf{1. Inizializzazione}
+\begin{itemize}
+\item L'algoritmo inizia con parametri casuali
+\item Non sa ancora come risolvere il problema
+\end{itemize}
+
+\textbf{2. Presentazione dei dati}
+\begin{itemize}
+\item L'algoritmo riceve un esempio dal dataset
+\item Prova a fare una predizione con i parametri attuali
+\end{itemize}
+
+\textbf{3. Calcolo dell'errore}
+\begin{itemize}
+\item Confronta la sua predizione con la risposta corretta
+\item Calcola numericamente quanto ha sbagliato
+\end{itemize}
+
+\textbf{4. Aggiornamento dei parametri}
+\begin{itemize}
+\item Modifica leggermente i suoi parametri interni
+\item L'obiettivo è ridurre l'errore per esempi simili
+\end{itemize}
+
+\textbf{5. Iterazione}
+\begin{itemize}
+\item Ripete il processo per tutti gli esempi nel dataset
+\item Continua per molti cicli (epoche) fino a convergenza
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Esempio Dettagliato: Predizione Prezzi Case}
+\textbf{Dataset:} 10.000 case con caratteristiche e prezzi reali
+
+\textbf{Input per ogni casa:}
+\begin{itemize}
+\item Superficie (mq), Numero stanze, Età, Distanza dal centro
+\end{itemize}
+
+\textbf{Output:} Prezzo di vendita
+
+\textbf{Processo di addestramento:}
+\begin{enumerate}
+\item L'algoritmo inizia con una formula con parametri casuali: 
+$$Prezzo = a \times Superficie + b \times Stanze + c \times Eta + d$$
+\item Per la prima casa (100mq, 3 stanze, 10 anni): predice 150.000 EUR
+\item Il prezzo reale era 200.000 EUR → errore di 50.000 EUR
+\item Aggiusta i coefficienti $a, b, c, d$ per ridurre questo errore
+\item Ripete per tutte le 10.000 case
+\item Dopo molte iterazioni, la formula diventa accurata
+\end{enumerate}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Un po' di Lessico: Features e Labels}
+\begin{center}
+\includegraphics[scale=.5]{../05-pictures/dimensione-cognitiva-2_pic_5.png} 
+\end{center}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Dalla Regressione alla Classificazione}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Dalla Regressione alla Classificazione}
+\begin{center}
+\includegraphics[scale=.5]{../05-pictures/dimensione-cognitiva-2_pic_6.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Dalla Regressione alla Classificazione}
+\begin{center}
+\includegraphics[scale=.5]{../05-pictures/dimensione-cognitiva-2_pic_7.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Dalla Regressione alla Classificazione}
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\textbf{Regressione}
+\begin{itemize}
+    \item Predice valori \textbf{continui}
+    \item Output: numeri reali
+    \item Esempio: prezzo €185.000
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Formula}
+$$y = w_1 x_1 + w_2 x_2 + b$$
+dove $y \in \mathbb{R}$
+\end{block}
+\end{column}
+
+\begin{column}{0.45\textwidth}
+\textbf{Classificazione}
+\begin{itemize}
+    \item Predice \textbf{categorie}
+    \item Output: classi discrete
+    \item Esempio: "Spam" o "Non Spam"
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{block}{Stesso Principio!}
+$$\text{Decisione} = f(w_1 x_1 + w_2 x_2 + b)$$
+dove $f$ trasforma in categorie
+\end{block}
+\end{column}
+\end{columns}
+
+\vspace{0.5cm}
+
+\begin{alertblock}{Concetto Chiave}
+Anche nella classificazione cerchiamo i \textbf{pesi ottimali} $w_1, w_2, \ldots$ che minimizzano l'errore!
+\end{alertblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Che cos'è una funzione?}
+\begin{center}
+\Large
+Una funzione è come un \textbf{operatore}:\\[0.5cm]
+\begin{tikzpicture}
+\draw[thick, rounded corners] (0,0) rectangle (4,2);
+\node at (2,1) {\Large FUNZIONE};
+\draw[->, thick, blue] (-1.5,1) -- (0,1);
+\node[left] at (-1.5,1) {\textbf{Input}};
+\draw[->, thick, red] (4,1) -- (5.5,1);
+\node[right] at (5.5,1) {\textbf{Output}};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+\begin{itemize}
+\item Riceve un \textcolor{blue}{\textbf{input}} (dato di ingresso)
+\item Esegue una \textbf{trasformazione}
+\item Produce un \textcolor{red}{\textbf{output}} (risultato)
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}
+\frametitle{Che cos'è una funzione?}
+
+\begin{center}
+\Large
+$f(x) = y$
+\end{center}
+
+\vspace{0.5cm}
+\begin{itemize}
+\item \textbf{$f$} è il nome della funzione
+\item \textbf{$x$} è l'input (variabile indipendente)
+\item \textbf{$y$} è l'output (variabile dipendente)
+\end{itemize}
+
+\vspace{0.5cm}
+\textbf{Esempio semplice:}
+$$f(x) = 2x + 1$$
+
+\begin{itemize}
+\item Se $x = 3$, allora $f(3) = 2 \cdot 3 + 1 = 7$
+\item Se $x = 0$, allora $f(0) = 2 \cdot 0 + 1 = 1$
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Dalla Regressione alla Classificazione}
+\begin{center}
+\includegraphics[scale=.6]{../05-pictures/dimensione-cognitiva-2_pic_8.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Dalla Regressione alla Classificazione}
+\begin{center}
+\includegraphics[scale=.5]{../05-pictures/dimensione-cognitiva-2_pic_9.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Esempio: Rilevamento Email Spam}
+\textbf{Problema}: Classificare automaticamente le email come "Spam" o "Non Spam"
+
+\vspace{0.5cm}
+
+\begin{block}{Caratteristiche dell'Email (Features)}
+\begin{itemize}
+    \item $x_1$: Numero di parole "GRATIS"
+    \item $x_2$: Numero di punti esclamativi
+    \item $x_3$: Presenza di link sospetti (0 o 1)
+    \item $x_4$: Lunghezza dell'email
+\end{itemize}
+\end{block}
+
+\vspace{0.5cm}
+
+\begin{block}{Modello Lineare}
+$$\text{Score} = w_1 \cdot x_1 + w_2 \cdot x_2 + w_3 \cdot x_3 + w_4 \cdot x_4 + b$$
+\end{block}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Esempio: Rilevamento Email Spam}
+\textbf{Problema}: Classificare automaticamente le email come "Spam" o "Non Spam"
+
+\vspace{0.5cm}
+
+\begin{block}{Caratteristiche dell'Email (Features)}
+\begin{itemize}
+    \item $x_1$: Numero di parole "GRATIS"
+    \item $x_2$: Numero di punti esclamativi
+    \item $x_3$: Presenza di link sospetti (0 o 1)
+    \item $x_4$: Lunghezza dell'email
+\end{itemize}
+\end{block}
+
+
+\vspace{0.3cm}
+
+\textbf{Regola di Decisione}:
+\begin{itemize}
+    \item Se Score $> 0$ → \textcolor{red}{\textbf{SPAM}}
+    \item Se Score $\leq 0$ → \textcolor{green}{\textbf{NON SPAM}}
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{I Pesi Raccontano una Storia}
+\textbf{Supponiamo che l'algoritmo impari questi pesi:}
+
+\vspace{0.5cm}
+
+\begin{block}{Modello Appreso}
+$$\text{Score} = \textcolor{red}{+3.2} \cdot x_1 + \textcolor{red}{+1.8} \cdot x_2 + \textcolor{red}{+5.1} \cdot x_3 + \textcolor{blue}{-0.01} \cdot x_4 + 0.5$$
+\end{block}
+
+\vspace{0.5cm}
+
+\textbf{Interpretazione dei Pesi:}
+\begin{itemize}
+    \item $w_1 = +3.2$: Ogni "GRATIS" aumenta molto la probabilità di spam
+    \item $w_2 = +1.8$: I punti esclamativi sono indicatori di spam
+    \item $w_3 = +5.1$: I link sospetti sono il segnale più forte di spam
+    \item $w_4 = -0.01$: Email più lunghe tendono a essere meno spam
+\end{itemize}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{I Pesi Raccontano una Storia}
+\textbf{Supponiamo che l'algoritmo impari questi pesi:}
+
+\vspace{0.5cm}
+
+\begin{block}{Modello Appreso}
+$$\text{Score} = \textcolor{red}{+3.2} \cdot x_1 + \textcolor{red}{+1.8} \cdot x_2 + \textcolor{red}{+5.1} \cdot x_3 + \textcolor{blue}{-0.01} \cdot x_4 + 0.5$$
+\end{block}
+
+\vspace{0.5cm}
+
+\begin{alertblock}{Esempio Concreto}
+Email con: 2 "GRATIS", 5 "!", 1 link sospetto, 200 parole\\
+Score = $3.2 \times 2 + 1.8 \times 5 + 5.1 \times 1 - 0.01 \times 200 + 0.5 = 18.9 > 0$ → \textcolor{red}{\textbf{SPAM}}
+\end{alertblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Come Trovare i Pesi Ottimali?}
+\textbf{Stesso processo della regressione, ma con funzione di errore diversa!}
+
+\vspace{0.5cm}
+
+\begin{enumerate}
+    \item \textbf{Dati di Training}
+    \begin{itemize}
+        \item Migliaia di email già etichettate: (features, label)
+        \item Es: ([2, 5, 1, 200], "Spam"), ([0, 1, 0, 50], "Non Spam")
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \item \textbf{Funzione di Errore}
+    \begin{itemize}
+        \item Non più errore quadratico, ma \textbf{Cross-Entropy Loss}
+        \item Penalizza classificazioni sbagliate
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \item \textbf{Ottimizzazione}
+    \begin{itemize}
+        \item Gradient Descent (come nella regressione!)
+        \item Cerca i pesi $w_1, w_2, w_3, w_4, b$ che minimizzano l'errore
+    \end{itemize}
+\end{enumerate}
+
+\vspace{0.5cm}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{L'Unità Fondamentale del Machine Learning}
+\begin{block}{Regressione e Classificazione: Stessa Filosofia}
+Entrambi i problemi seguono lo stesso schema fondamentale:
+\end{block}
+
+\vspace{0.5cm}
+
+\begin{columns}
+\begin{column}{0.3\textwidth}
+\centering
+\textbf{1. Dati}\\
+\vspace{0.2cm}
+Input + Output\\
+di training
+\end{column}
+\begin{column}{0.05\textwidth}
+\centering
+$\rightarrow$
+\end{column}
+\begin{column}{0.3\textwidth}
+\centering
+\textbf{2. Modello}\\
+\vspace{0.2cm}
+Combinazione lineare\\
+$\sum w_i x_i + b$
+\end{column}
+\begin{column}{0.05\textwidth}
+\centering
+$\rightarrow$
+\end{column}
+\begin{column}{0.3\textwidth}
+\centering
+\textbf{3. Ottimizzazione}\\
+\vspace{0.2cm}
+Trova i pesi $w_i$\\
+migliori
+\end{column}
+\end{columns}
+
+\vspace{1cm}
+
+\begin{alertblock}{Differenze Principali}
+\begin{itemize}
+    \item \textbf{Regressione}: Output continuo, Errore Quadratico
+    \item \textbf{Classificazione}: Output discreto, Cross-Entropy Loss
+    \item \textbf{Entrambi}: Cercano pesi ottimali Minimizzando l'Errore!
+\end{itemize}
+\end{alertblock}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Un Salto Concettuale: Dai Numeri alla Geometria}
+%
+%..................................................................
+%
+\begin{frame}{I Dati Come Punti nello Spazio}
+\textbf{Intuizione Chiave}: Ogni dato può essere rappresentato come un \textbf{punto} in uno spazio multidimensionale
+
+\vspace{0.5cm}
+
+\begin{block}{Esempio: Email Spam (2 caratteristiche)}
+\begin{itemize}
+    \item Email A: 3 "GRATIS", 5 "!" → Punto $(3, 5)$
+    \item Email B: 0 "GRATIS", 1 "!" → Punto $(0, 1)$  
+    \item Email C: 8 "GRATIS", 12 "!" → Punto $(8, 12)$
+\end{itemize}
+\end{block}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{I Dati Come Punti nello Spazio}
+\textbf{Intuizione Chiave}: Ogni dato può essere rappresentato come un \textbf{punto} in uno spazio multidimensionale
+
+\vspace{0.5cm}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\textbf{Spazio 2D}
+\begin{center}
+\begin{tikzpicture}[scale=0.6]
+\draw[->] (0,0) -- (4,0) node[right] {Num. "GRATIS"};
+\draw[->] (0,0) -- (0,4) node[above] {Num. "!"};
+%\draw[grid] (0,0) grid (3.5,3.5);
+\draw[step=1cm, gray, very thin] (0,0) grid (3.5,3.5);
+
+% Email points
+\fill[red] (0.5,0.5) circle (3pt) node[below left] {\tiny Non Spam};
+\fill[red] (1,1.5) circle (3pt);
+\fill[blue] (2.5,2.5) circle (3pt) node[above right] {\tiny Spam};
+\fill[blue] (3,3) circle (3pt);
+\end{tikzpicture}
+\end{center}
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\textbf{Osservazione}
+\begin{itemize}
+    \item \textcolor{red}{Email non-spam} tendono a raggrupparsi in una zona
+    \item \textcolor{blue}{Email spam} si raggruppano in un'altra zona
+    \item Esiste una \textbf{separazione naturale}!
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Generalizzazione a N Dimensioni}
+\textbf{Il principio si estende a qualsiasi numero di caratteristiche!}
+
+\vspace{0.5cm}
+
+\begin{block}{Email con 4 Caratteristiche}
+Ogni email diventa un punto in uno spazio a 4 dimensioni:
+$$\text{Email} = (x_1, x_2, x_3, x_4) \in \mathbb{R}^4$$
+dove:
+\begin{itemize}
+    \item $x_1$ = Numero "GRATIS"
+    \item $x_2$ = Numero "!"  
+    \item $x_3$ = Link sospetti (0/1)
+    \item $x_4$ = Lunghezza email
+\end{itemize}
+\end{block}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Generalizzazione a N Dimensioni}
+\textbf{Il principio si estende a qualsiasi numero di caratteristiche!}
+
+\vspace{0.5cm}
+
+\begin{columns}
+\begin{column}{0.45\textwidth}
+\textbf{Esempi Concreti}
+\begin{itemize}
+    \item Spam: $(2, 5, 1, 200)$
+    \item Non Spam: $(0, 1, 0, 150)$
+    \item Spam: $(4, 8, 1, 80)$
+\end{itemize}
+\end{column}
+\begin{column}{0.45\textwidth}
+\begin{alertblock}{Idea Fondamentale}
+Anche se non possiamo \textbf{visualizzare} 4 dimensioni, il computer può \textbf{lavorare} in questo spazio!
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il Problema Diventa Geometrico}
+\textbf{Classificazione} = \textbf{Separazione geometrica} nello spazio delle caratteristiche
+
+\vspace{0.5cm}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8]
+% Assi
+\draw[->] (0,0) -- (5,0) node[right] {$x_1$ (caratteristica 1)};
+\draw[->] (0,0) -- (0,4) node[above] {$x_2$ (caratteristica 2)};
+
+% Punti spam (blu)
+\fill[blue] (3.5,3) circle (3pt);
+\fill[blue] (4,2.5) circle (3pt);
+\fill[blue] (3,3.5) circle (3pt);
+\fill[blue] (4.2,3.2) circle (3pt);
+
+% Punti non-spam (rossi)
+\fill[red] (1,1) circle (3pt);
+\fill[red] (1.5,0.8) circle (3pt);
+\fill[red] (0.8,1.5) circle (3pt);
+\fill[red] (1.2,1.8) circle (3pt);
+
+% Linea di separazione
+\draw[thick, green] (2,0.5) -- (2.8,3.8);
+
+% Etichette
+\node[blue] at (4.5,2.8) {\textbf{Spam}};
+\node[red] at (0.5,2) {\textbf{Non Spam}};
+\node[green] at (3.2,2) {\textbf{Confine}};
+\end{tikzpicture}
+\end{center}
+
+\vspace{0.5cm}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Il Problema Diventa Geometrico}
+\textbf{Classificazione} = \textbf{Separazione geometrica} nello spazio delle caratteristiche
+\vspace{0.5cm}
+\begin{block}{Obiettivo del Machine Learning}
+Trovare il \textbf{confine ottimale} che separa al meglio le due classi
+\end{block}
+\vspace{0.5cm}
+\begin{itemize}
+    \item \textbf{Confine lineare}: una retta (2D), un piano (3D), un iperpiano (N-D)
+    \item \textbf{Equazione del confine}: $w_1 x_1 + w_2 x_2 + b = 0$
+\end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Dal Confine alla Classificazione}
+\textbf{Come usiamo il confine per classificare nuovi punti?}
+
+\vspace{0.5cm}
+
+\begin{block}{Equazione del Confine}
+$$w_1 x_1 + w_2 x_2 + b = 0$$
+\end{block}
+
+\begin{block}{Regola di Classificazione}
+Per un nuovo punto $(x_1, x_2)$:
+\begin{itemize}
+    \item Se $w_1 x_1 + w_2 x_2 + b > 0$ → \textcolor{blue}{\textbf{Classe A (Spam)}}
+    \item Se $w_1 x_1 + w_2 x_2 + b < 0$ → \textcolor{red}{\textbf{Classe B (Non Spam)}}
+\end{itemize}
+\end{block}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Dal Confine alla Classificazione}
+\textbf{Come usiamo il confine per classificare nuovi punti?}
+\vspace{0.5cm}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=0.6]
+\draw[->] (0,0) -- (4,0) node[right] {$x_1$};
+\draw[->] (0,0) -- (0,4) node[above] {$x_2$};
+
+% Confine
+\draw[thick, green] (1,0.5) -- (3,3.5);
+
+% Punti di esempio
+\fill[blue] (3.5,3) circle (3pt);
+\fill[red] (1,1) circle (3pt);
+
+% Nuovo punto
+\fill[orange]    (2.5,1.5) circle (4pt);
+\node[orange] at (3.0,1.2) {\textbf{?}};
+
+% Etichette delle zone
+\node[blue] at (3.5, 4.5) {$w_1x_1+w_2x_2+b>0$};
+\node[red]  at (0.5,-1.0) {$w_1x_1+w_2x_2+b<0$};
+\end{tikzpicture}
+\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}
+\textbf{Esempio Numerico}
+\vspace{0.2cm}
+Se il confine è:
+$$2x_1 + 3x_2 - 5 = 0$$
+
+Per il punto arancione $(2.5, 1.5)$:
+$$2(2.5) + 3(1.5) - 5 = 4.5 > 0$$
+
+Quindi: \textcolor{blue}{\textbf{Spam}}!
+\end{column}
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Torniamo ai Pesi: La Connessione}
+\textbf{I pesi $w_1, w_2, b$ definiscono completamente il confine di separazione!}
+
+\vspace{0.5cm}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{tikzpicture}[scale=0.7]
+\draw[->] (0,0) -- (4,0) node[right] {$x_1$};
+\draw[->] (0,0) -- (0,4) node[above] {$x_2$};
+
+% Confine
+\draw[thick, green] (0.5,1) -- (3.5,3);
+
+% Vettore normale
+%\draw[->, thick, purple] (2,2) -- (2.5,2.8);
+\node[purple] at (2.8,0.5) {$(w_1,w_2)$};
+
+% Punti
+\fill[blue] (3,3.5) circle (2pt);
+\fill[red] (1,0.5) circle (2pt);
+\end{tikzpicture}
+\end{center}
+\end{column}
+\begin{column}{0.5\textwidth}
+\begin{alertblock}{Collegamento Cruciale}
+Il \textbf{training} del modello consiste nel trovare i pesi $(w_1, w_2, b)$ che definiscono il confine ottimale!
+\end{alertblock}
+
+\textbf{Processo}:
+\begin{enumerate}
+    \item Prova diversi confini (diversi pesi)
+    \item Misura quanti punti classifica male
+    \item Aggiusta i pesi per ridurre gli errori
+\end{enumerate}
+\end{column}
+\end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Sintesi: Una Nuova Prospettiva}
+\begin{block}{Abbiamo trasformato il problema!}
+\textbf{Da}: "Come classificare email spam?" \\
+\textbf{A}: "Come trovare il miglior confine geometrico in uno spazio multidimensionale?"
+\end{block}
+
+\vspace{0.5cm}
+
+\textbf{Vantaggi di questa visione geometrica:}
+\begin{itemize}
+    \item \textbf{Intuizione}: Capiamo cosa fa veramente l'algoritmo
+    \item \textbf{Generalizzazione}: Funziona per qualsiasi numero di dimensioni
+    \item \textbf{Ottimizzazione}: Possiamo usare metodi geometrici potenti
+\end{itemize}
+
+\vspace{0.5cm}
+
+\begin{block}{Concetto Universale}
+\textbf{Machine Learning} = Trovare pattern e confini negli spazi multidimensionali!
+\end{block}
+\end{frame}
+
+%% aggiungere esempio del cancro al seno 
+
+
+%
+%=====================================================================
+%
+\end{document}

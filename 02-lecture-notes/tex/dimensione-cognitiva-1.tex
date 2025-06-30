@@ -1,0 +1,671 @@
+\documentclass[aspectratio=169,12pt]{beamer}
+%
+%=====================================================================
+%
+% Tema e colori
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\setbeamertemplate{navigation symbols}{}
+%
+%=====================================================================
+%
+% Pacchetti
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{enumitem}
+%
+%=====================================================================
+%
+\title{Dimensione Cognitiva \\ 1. Introduzione all'Intelligenza Artificiale}
+\subtitle{Dalle origini ai paradigmi moderni}
+\setbeamercovered{transparent} 
+\author{Giovanni Della Lunga\\{\footnotesize giovanni.dellalunga@unibo.it}}
+\institute{A lezione di Intelligenza Artificiale} 
+\date{Siena - Giugno 2025} 
+%
+%=====================================================================
+%
+\begin{document}
+
+% Slide titolo
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Indice
+\begin{frame}{Indice}
+    \tableofcontents
+\end{frame}
+%
+%=====================================================================
+%
+\AtBeginSection[]
+{
+  %\begin{frame}<beamer>
+  %\footnotesize	
+  %\frametitle{Outline}
+  %\begin{multicols}{2}
+  %\tableofcontents[currentsection]
+  %\end{multicols}	  
+  %\normalsize
+  %\end{frame}
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}  	 	 	\usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+\AtBeginSubsection{\frame{\subsectionpage}}
+%__________________________________________________________________________
+%
+\section{Che cos'è l'Intelligenza Artificiale?}
+%
+%..................................................................
+%
+\begin{frame}{Definizione di Intelligenza Artificiale}
+    \begin{block}{Definizione generale}
+        L'\textbf{Intelligenza Artificiale} (IA o AI) è la disciplina che studia e sviluppa sistemi informatici capaci di eseguire compiti che normalmente richiederebbero intelligenza umana.
+    \end{block}
+    
+    \vspace{0.5cm}
+    
+    \begin{itemize}
+        \item Ragionamento logico
+        \item Apprendimento dall'esperienza
+        \item Riconoscimento di pattern
+        \item Comprensione del linguaggio naturale
+        \item Risoluzione di problemi complessi
+        \item Percezione e interpretazione dell'ambiente
+    \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{L'AI nella vita quotidiana}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Esempi concreti:}
+            \begin{itemize}
+                \item Assistenti vocali (Siri, Alexa)
+                \item Raccomandazioni Netflix/Spotify
+                \item Navigatori GPS
+                \item Filtri antispam
+                \item Traduttori automatici
+                \item Fotocamere con riconoscimento facciale
+                \item ChatGPT, Gemini, Claude ...
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.8]
+                    \draw[fill=blue!20] (0,0) circle (2);
+                    \node at (0,0.5) {\textbf{AI}};
+                    \node at (0,0) {\textbf{nella}};
+                    \node at (0,-0.5) {\textbf{vita}};
+                    \node at (0,-1) {\textbf{quotidiana}};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Storia dell'Intelligenza Artificiale}
+%
+%..................................................................
+%
+\begin{frame}{Le origini: dai miti alla scienza}
+    \begin{block}{Radici antiche}
+        L'idea di creare esseri artificiali intelligenti ha radici antiche:
+    \end{block}
+    
+    \begin{itemize}
+        \item \textbf{Mitologia greca}: Talos (gigante di bronzo), Pandora
+        \item \textbf{Medioevo}: automi meccanici nelle corti europee
+        \item \textbf{1600-1700}: automi di Vaucanson, il "Turco meccanico"
+        \item \textbf{1800}: Ada Lovelace e le prime idee di programmazione
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \begin{alertblock}{Punto di svolta}
+        Il XX secolo porta le basi scientifiche: logica matematica, teoria della computazione, cibernetica
+    \end{alertblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{1950-1960: La nascita dell'AI moderna}
+    \begin{block}{1950 - Alan Turing}
+        \textbf{Test di Turing}: "Una macchina può pensare?"
+    \end{block}
+    
+\begin{center}
+\includegraphics[scale=.3]{../05-pictures/dimensione-cognitiva-1_pic_0.png} 
+\end{center}
+
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{1950-1960: La nascita dell'AI moderna}
+    
+    \begin{block}{1956 - Conferenza di Dartmouth}
+        \textbf{Nascita ufficiale} dell'AI come disciplina scientifica
+        \begin{itemize}
+            \item John McCarthy conia il termine "Artificial Intelligence"
+            \item Partecipanti: Marvin Minsky, Herbert Simon, Allen Newell
+            \item Obiettivo ambizioso: simulare ogni aspetto dell'intelligenza
+        \end{itemize}
+    \end{block}
+    
+    \vspace{0.3cm}
+    
+    \textbf{Primi successi:}
+    \begin{itemize}
+        \item Logic Theorist (1956) - dimostra teoremi matematici
+        \item General Problem Solver (1957) - risolve problemi generici
+    \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{1950-1960: La nascita dell'AI moderna}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-1_pic_1.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{1950-1960: La nascita dell'AI moderna}
+\begin{center}
+\includegraphics[scale=.4]{../05-pictures/dimensione-cognitiva-1_pic_2.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Anni '60-'70: Ottimismo e prime difficoltà}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \textbf{Grandi aspettative:}
+            \begin{itemize}
+                \item Previsioni di AI completa entro 20 anni
+                \item Investimenti governativi massicci
+                \item Sviluppo dei primi linguaggi AI (LISP)
+            \end{itemize}
+            
+            \vspace{0.3cm}
+            
+            \textbf{Prime difficoltà:}
+            \begin{itemize}
+                \item Problemi più complessi del previsto
+                \item Limitazioni computazionali
+                \item "Esplosione combinatoriale"
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{center}
+                \textbf{Timeline}\\
+                \vspace{0.2cm}
+                \begin{tikzpicture}[scale=0.7]
+                    \draw[thick] (0,0) -- (0,4);
+                    \node[left] at (0,4) {1970};
+                    \node[left] at (0,3) {1965};
+                    \node[left] at (0,2) {1960};
+                    \node[left] at (0,1) {1958};
+                    \node[left] at (0,0) {1956};
+                    
+                    \draw[red] (-0.1,0) -- (0.1,0);
+                    \node[right,scale=0.7] at (0.1,0) {Dartmouth};
+                    \draw[red] (-0.1,1) -- (0.1,1);
+                    \node[right,scale=0.7] at (0.1,1) {Perceptron};
+                    \draw[red] (-0.1,3.5) -- (0.1,3.5);
+                    \node[right,scale=0.7] at (0.1,3.5) {SHRDLU};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Anni '70-'80: Il primo "inverno dell'AI"}
+    \begin{alertblock}{Crisi di fiducia (1974-1980)}
+        \begin{itemize}
+            \item Riduzione drastica dei finanziamenti
+            \item Critiche ai limiti dei sistemi esistenti
+            \item Report Lighthill (UK) molto critico
+        \end{itemize}
+    \end{alertblock}
+    
+    \vspace{0.3cm}
+    
+    \begin{block}{Rinascita con i Sistemi Esperti (1980-1987)}
+        \textbf{Idea}: catturare la conoscenza degli esperti umani
+        \begin{itemize}
+            \item DENDRAL (analisi chimica)
+            \item MYCIN (diagnosi mediche)
+            \item R1/XCON (configurazione computer)
+            \item Mercato da miliardi di dollari
+        \end{itemize}
+    \end{block}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Gli "Inverni" dell'AI}
+\begin{center}
+\includegraphics[scale=.75]{../05-pictures/dimensione-cognitiva-1_pic_3.png} 
+\end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Anni '90-2000: Approcci più realistici}
+    \textbf{Cambiamento di paradigma:}
+    \begin{itemize}
+        \item Dai sistemi generali a quelli specializzati
+        \item Focus su problemi specifici e misurabili
+        \item Approcci statistici e probabilistici
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \textbf{Successi notevoli:}
+    \begin{itemize}
+        \item \textbf{1997}: Deep Blue batte Kasparov a scacchi
+        \item Sviluppo del machine learning
+        \item Nascita del web e dei big data
+        \item Algoritmi di ricerca e raccomandazione
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \begin{block}{Fattori abilitanti}
+        Maggiore potenza computazionale + Grandi quantità di dati + Algoritmi migliorati
+    \end{block}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{2000-oggi: L'era del deep learning}
+    \textbf{Rivoluzioni recenti:}
+    \begin{itemize}
+        \item \textbf{2006}: Hinton e il deep learning
+        \item \textbf{2012}: AlexNet rivoluziona la computer vision
+        \item \textbf{2016}: AlphaGo batte Lee Sedol al Go
+        \item \textbf{2017}: Transformer e l'NLP moderno
+        \item \textbf{2022}: ChatGPT porta l'AI al grande pubblico
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \begin{alertblock}{Fattori chiave del successo attuale}
+        \begin{itemize}
+            \item GPU e calcolo parallelo massivo
+            \item Internet e big data
+            \item Algoritmi di apprendimento profondo
+            \item Investimenti miliardari
+        \end{itemize}
+    \end{alertblock}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{I due paradigmi dell'AI}
+%
+%..................................................................
+%
+\begin{frame}{AI Simbolica vs AI Subsimbolica}
+    \begin{center}
+        \textbf{L'AI non è solo Machine Learning!}
+    \end{center}
+    
+    \vspace{0.5cm}
+    
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{\centering AI Simbolica}
+                \centering
+                \textbf{"Good Old-Fashioned AI"}\\
+                \textbf{(GOFAI)}
+            \end{block}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{\centering AI Subsimbolica}
+                \centering
+                \textbf{Machine Learning}\\
+                \textbf{Deep Learning}
+            \end{block}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.5cm}
+    
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[thick, <->] (0,0) -- (8,0);
+            \node[below] at (2,0) {Logica};
+            \node[below] at (6,0) {Statistica};
+            \node[above] at (2,0) {Regole esplicite};
+            \node[above] at (6,0) {Apprendimento dai dati};
+            \draw[red,thick] (2,-0.2) -- (2,0.2);
+            \draw[blue,thick] (6,-0.2) -- (6,0.2);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{AI Simbolica: Il ragionamento logico}
+    \begin{block}{Principi base}
+        \begin{itemize}
+            \item Rappresentazione esplicita della conoscenza
+            \item Uso di simboli e regole logiche
+            \item Ragionamento deduttivo
+            \item Trasparenza e spiegabilità
+        \end{itemize}
+    \end{block}
+    
+    \textbf{Esempi concreti:}
+    \begin{itemize}
+        \item \textbf{Sistemi esperti}: MYCIN per diagnosi mediche
+        \item \textbf{Pianificazione}: robot che pianifica movimenti
+        \item \textbf{Dimostrazione di teoremi}: assistenti matematici
+        \item \textbf{Elaborazione del linguaggio}: grammatiche formali
+    \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{AI Simbolica: Il ragionamento logico}
+    \begin{block}{Principi base}
+        \begin{itemize}
+            \item Rappresentazione esplicita della conoscenza
+            \item Uso di simboli e regole logiche
+            \item Ragionamento deduttivo
+            \item Trasparenza e spiegabilità
+        \end{itemize}
+    \end{block}
+    
+    \vspace{0.3cm}
+    
+    \begin{exampleblock}{Esempio: Regola medica}
+        SE (febbre $\ge$  38°C) E (mal di gola) E (linfonodi gonfi)\\
+        ALLORA probabilità streptococco = alta
+    \end{exampleblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{AI Simbolica: Vantaggi e Limiti}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Vantaggi:}
+            \begin{itemize}
+                \item Trasparenza totale
+                \item Facilità di debug
+                \item Incorpora conoscenza esperta
+                \item Ragionamento preciso
+                \item Non servono grandi dataset
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Limiti:}
+            \begin{itemize}
+                \item Difficile acquisire conoscenza
+                \item Rigidità nelle regole
+                \item Non gestisce incertezza
+                \item Costosa da mantenere
+                \item Non si adatta automaticamente
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.5cm}
+    
+    \begin{alertblock}{Il problema della "bottiglia della conoscenza"}
+        Come trasferire la conoscenza dell'esperto umano nel sistema?
+    \end{alertblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{AI Subsimbolica: L'apprendimento dai dati}
+    \begin{block}{Principi base}
+        \begin{itemize}
+            \item Apprendimento automatico da esempi
+            \item Rappresentazioni distribuite (neuroni, pesi)
+            \item Adattamento statistico
+            \item Pattern recognition
+        \end{itemize}
+    \end{block}
+    
+    \textbf{Categorie principali:}
+    \begin{itemize}
+        \item \textbf{Machine Learning classico}: SVM, Decision Trees, k-means
+        \item \textbf{Reti neurali artificiali}: Perceptron, MLP
+        \item \textbf{Deep Learning}: CNN, RNN, Transformer
+        \item \textbf{Apprendimento per rinforzo}: AlphaGo, giochi
+    \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{AI Subsimbolica: L'apprendimento dai dati}
+    \begin{block}{Principi base}
+        \begin{itemize}
+            \item Apprendimento automatico da esempi
+            \item Rappresentazioni distribuite (neuroni, pesi)
+            \item Adattamento statistico
+            \item Pattern recognition
+        \end{itemize}
+    \end{block}
+    
+    \vspace{0.3cm}
+    
+    \begin{exampleblock}{Esempio: Riconoscimento immagini}
+        Sistema impara a riconoscere gatti analizzando migliaia di foto etichettate
+    \end{exampleblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{AI Subsimbolica: Vantaggi e Limiti}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Vantaggi:}
+            \begin{itemize}
+                \item Apprende automaticamente
+                \item Gestisce dati rumorosi
+                \item Adattabile e flessibile
+                \item Eccelle in pattern recognition
+                \item Migliora con più dati
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Limiti:}
+            \begin{itemize}
+                \item "Scatola nera"
+                \item Servono molti dati
+                \item Computazionalmente costoso
+                \item Può overfittare
+                \item Difficile da debuggare
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.5cm}
+    
+    \begin{alertblock}{Il problema della spiegabilità}
+        Come sapere perché il sistema ha preso una certa decisione?
+    \end{alertblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Confronto diretto: Simbolica vs Subsimbolica}
+    \begin{center}
+        \begin{tabular}{|l|c|c|}
+            \hline
+            \textbf{Caratteristica} & \textbf{Simbolica} & \textbf{Subsimbolica} \\
+            \hline
+            Trasparenza & \textcolor{green}{Alta} & \textcolor{red}{Bassa} \\
+            \hline
+            Dati richiesti & \textcolor{green}{Pochi} & \textcolor{red}{Molti} \\
+            \hline
+            Adattabilità & \textcolor{red}{Bassa} & \textcolor{green}{Alta} \\
+            \hline
+            Gestione rumore & \textcolor{red}{Difficile} & \textcolor{green}{Buona} \\
+            \hline
+            Conoscenza esperta & \textcolor{green}{Incorporabile} & \textcolor{red}{Difficile} \\
+            \hline
+            Scalabilità & \textcolor{red}{Limitata} & \textcolor{green}{Buona} \\
+            \hline
+            Costo computazionale & \textcolor{green}{Basso} & \textcolor{red}{Alto} \\
+            \hline
+        \end{tabular}
+    \end{center}
+    
+    \vspace{0.5cm}
+    
+    \begin{block}{Conclusione}
+        Nessun approccio è superiore in assoluto: dipende dal problema e dal contesto!
+    \end{block}
+\end{frame}
+%__________________________________________________________________________
+%
+\section{Applicazioni e Futuro}
+%
+%..................................................................
+%
+\begin{frame}{Applicazioni moderne: Approcci ibridi}
+    \textbf{La tendenza attuale}: combinare simbolica e subsimbolica
+    
+    \vspace{0.3cm}
+    
+    \begin{exampleblock}{Esempi di sistemi ibridi}
+        \begin{itemize}
+            \item \textbf{Diagnosi medica}: Deep learning per analisi immagini + regole cliniche
+            \item \textbf{Veicoli autonomi}: CNN per percezione + pianificazione simbolica
+            \item \textbf{Assistenti virtuali}: NLP neurale + knowledge base strutturati
+            \item \textbf{Giochi}: reti neurali + ricerca ad albero (AlphaGo)
+        \end{itemize}
+    \end{exampleblock}
+    
+    \vspace{0.3cm}
+    
+    \textbf{Vantaggi dell'approccio ibrido:}
+    \begin{itemize}
+        \item Combina il meglio di entrambi i mondi
+        \item Maggiore robustezza e affidabilità
+        \item Spiegabilità dove necessaria
+        \item Adattabilità dove richiesta
+    \end{itemize}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Sfide attuali dell'AI}
+    \begin{block}{Sfide tecniche}
+        \begin{itemize}
+            \item \textbf{Spiegabilità}: rendere l'AI più trasparente
+            \item \textbf{Robustezza}: sistemi che funzionano in contesti diversi
+            \item \textbf{Efficienza}: ridurre i costi computazionali
+            \item \textbf{Generalizzazione}: AI che funziona oltre i dati di training
+        \end{itemize}
+    \end{block}
+    
+    \begin{block}{Sfide etiche e sociali}
+        \begin{itemize}
+            \item \textbf{Bias algoritmici}: pregiudizi nei dati e nei modelli
+            \item \textbf{Privacy}: protezione dei dati personali
+            \item \textbf{Lavoro}: impatto sull'occupazione
+            \item \textbf{Sicurezza}: AI affidabile e controllabile
+        \end{itemize}
+    \end{block}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Implicazioni per l'educazione}
+    \textbf{Come l'AI sta cambiando l'educazione:}
+    
+    \begin{itemize}
+        \item \textbf{Personalizzazione}: sistemi di tutoring adattivi
+        \item \textbf{Assistenza}: strumenti per correzione automatica
+        \item \textbf{Accessibilità}: traduzione e trascrizione automatica
+        \item \textbf{Nuove competenze}: necessità di alfabetizzazione digitale
+    \end{itemize}
+    
+    \vspace{0.5cm}
+    
+    \begin{alertblock}{Ruolo cruciale dell'insegnante}
+        L'AI non sostituisce l'insegnante, ma può potenziarne l'efficacia:
+        \begin{itemize}
+            \item Liberare tempo dalle attività ripetitive
+            \item Focus su creatività, pensiero critico, relazioni umane
+            \item Interpretazione e contestualizzazione delle informazioni
+        \end{itemize}
+    \end{alertblock}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Conclusioni}
+    \begin{block}{Punti chiave da ricordare}
+        \begin{itemize}
+            \item L'AI ha radici antiche ma sviluppo recente accelerato
+            \item Non è solo machine learning: esistono approcci diversi
+            \item Simbolica e subsimbolica hanno vantaggi e limiti complementari
+            \item Gli approcci ibridi rappresentano il futuro
+            \item L'AI pone sfide tecniche, etiche e sociali importanti
+        \end{itemize}
+    \end{block}
+    
+    \vspace{0.5cm}
+    
+    \begin{center}
+        \textbf{L'intelligenza artificiale è uno strumento potente\\
+        che richiede comprensione, uso consapevole\\
+        e considerazione etica}
+    \end{center}
+\end{frame}
+%
+%..................................................................
+%
+\begin{frame}{Bibliografia e Approfondimenti}
+    \textbf{Testi introduttivi:}
+    \begin{itemize}
+        \item Russell, S., Norvig, P. "Artificial Intelligence: A Modern Approach"
+        \item Flach, P. "Machine Learning: The Art and Science of Algorithms"
+        \item Nilsson, N. "The Quest for Artificial Intelligence"
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \textbf{Risorse online:}
+    \begin{itemize}
+        \item Coursera: "Machine Learning" (Andrew Ng)
+        \item MIT OpenCourseWare: "Introduction to AI"
+        \item Elements of AI (University of Helsinki)
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \textbf{Per rimanere aggiornati:}
+    \begin{itemize}
+        \item IEEE Spectrum AI
+        \item MIT Technology Review
+        \item Nature Machine Intelligence
+    \end{itemize}
+\end{frame}
+
+
+\end{document}
